@@ -1,6 +1,6 @@
 # Feature: Topology Manager
 
-[Topology Manager](https://docs.openshift.com/container-platform/4.10/scalability_and_performance/using-topology-manager.html) coordinates Pod admission on the Node using hints from kubelet components to optimize workload  performance. The Topology Manager collects Hints from kubelet components on a pod-by-pod or a container-by-container basis. These Topology Hints are generated from the spec.containers.resources and spec.initContainers.resources requests key-values and limits key-values. If the generated Topology Hints are not compatible with the Node, the Pod may be rejected.
+[Topology Manager](https://docs.openshift.com/container-platform/4.10/scalability_and_performance/using-topology-manager.html) coordinates Pod admission on the Node using hints from *kubelet* components to optimize workload performance. The Topology Manager collects Hints from kubelet components on a pod-by-pod or a container-by-container basis. These Topology Hints are generated from the *spec.containers.resources* and *spec.initContainers.resources* requests key-values and limits key-values. If the generated Topology Hints are not compatible with the Node, the Pod may be rejected.
 
 Included in this document are supporting use-cases to see how the feature works on the IBM Power Systems hardware, and details on supporting references and utilities. 
 
