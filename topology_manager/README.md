@@ -1,5 +1,15 @@
+# Feature: Topology Manager
+
+[Topology Manager](https://docs.openshift.com/container-platform/4.10/scalability_and_performance/using-topology-manager.html) coordinates Pod admission on the Node using hints from kubelet components to optimize workload  performance. The Topology Manager collects Hints from kubelet components on a pod-by-pod or a container-by-container basis. These Topology Hints are generated from the spec.containers.resources and spec.initContainers.resources requests key-values and limits key-values. If the generated Topology Hints are not compatible with the Node, the Pod may be rejected.
+
+Included in this document are supporting use-cases to see how the feature works on the IBM Power Systems hardware, and details on supporting references and utilities. 
+
+# Use Cases
+
+**`<`To Be Added`>`**
 
 # References
+The following are useful references related to the Topology Manager. 
 
 - [borball/k8s-tm-test](https://github.com/borball/k8s-tm-test) for great examples. 
 - **OpenShift**
@@ -236,7 +246,19 @@ c. Download and View the file (note certain parts were removed to hide the hostn
 
 > ![images/topology.svg](images/topology.svg)
 
-6. 
+6. Check `/sys/fs/cgroup/memory` has the `memory.numa_stat` file
+
+```
+$ cat /sys/fs/cgroup/memory/memory.numa_stat 
+total=227 N1=227
+file=133 N1=133
+anon=0 N1=0
+unevictable=94 N1=94
+hierarchical_total=21096 N1=20097
+hierarchical_file=14617 N1=12969
+hierarchical_anon=3960 N1=4851
+hierarchical_unevictable=2519 N1=2277
+```
 
 # Is this a Red Hat or IBM supported solution?
 
