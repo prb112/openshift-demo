@@ -260,6 +260,8 @@ hierarchical_anon=3960 N1=4851
 hierarchical_unevictable=2519 N1=2277
 ```
 
+7. [cpuset-visualizer](https://github.com/ConnorDoyle/cpuset-visualizer) has handy tool to visualize CPU Set usage
+
 # Is this a Red Hat or IBM supported solution?
 
 No. This is only a proof of concept that serves as a good starting point to understand how the Descheduler Profiles works in OpenShift.
