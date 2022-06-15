@@ -43,7 +43,7 @@ func addHeapPressure() {
 	var storage bytes.Buffer
 	var m runtime.MemStats
 	for i := 0; i < 50000000; i++ {
-		if i%10 == 0 {
+		if i%100 == 0 {
 			// The call to ReadMemStats is slow.
 			// The conditional check guards against too many slow checks.
 			runtime.ReadMemStats(&m)
