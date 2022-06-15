@@ -18,7 +18,7 @@ package hugepages
 void generate_pressure()
 {
 	void *addr;
-	int fd, ret;
+	int fd; 
 
 	fd = open(FILE_NAME, O_CREAT | O_RDWR, 0755);
 	if (fd < 0) {
@@ -34,7 +34,6 @@ void generate_pressure()
 	}
 
 	printf("Returned address is %p\n", addr);
-	ret = read_bytes(addr);	
 }
 */
 import "C"
