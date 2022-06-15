@@ -40,7 +40,7 @@ func reportMemStats() {
 // Adds to an existing Map
 func addHeapPressure() {
 	defer wg.Done()
-	storage := [][]byte{[]byte("an")}
+	var storage bytes.Buffer
 	var m runtime.MemStats
 	for i := 0; i < 50000000; i++ {
 		if i%10000 == 0 {
@@ -54,10 +54,10 @@ func addHeapPressure() {
 			}
 		}
 
-		joined := bytes.Join(storage, []byte("abcdefghijklmnopqrstuvwxyz|abcdefghijklmnopqrstuvwxyz|abcdefghijklmnopqrstuvwxyz|abcdefghijklmnopqrstuvwxyz"))
-		storage = append(storage, joined)
+		storage.WriteString("abcdefghijklmnopqrstuvwxyz|")
 	}
-	fmt.Println("Done... creating Memory Pressure")
+	fmt.Println("Done... creating Memory Pressure ", storage.Len())
+	wg.Wait()
 }
 
 // The command waits for signals to shutdown.
