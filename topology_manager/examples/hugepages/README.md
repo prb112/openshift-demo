@@ -1,39 +1,59 @@
 # Feature: Topology Manager - Huge Pages Demonstration for OpenShift on Power
 
 
+$ sysctl -w vm.nr_hugepages=256
+
+$ grep Hugepagesize /proc/meminfo
+Hugepagesize:      16384 kB
+
+
 mmap: Cannot allocate memory
 echo 20 > /proc/sys/vm/nr_hugepages
 https://stackoverflow.com/questions/27634109/why-mmap-cannot-allocate-memory
 
-#  hugeadm  --list-all-mounts 
+Please Note: Before allocating a big number of Hugepage on a system that is running Virtual Machines or other memory hungry applications, make sure to shutdown your Virtual Machines and any memory hungry application before executing the previous command otherwise the execution may take a long time to complete.
+
+$  hugeadm  --list-all-mounts 
 Mount Point                      Options
 /dev/hugepages                   rw,seclabel,relatime,pagesize=16M
 /var/lib/hugetlbfs/pagesize-16MB rw,seclabel,relatime,pagesize=16M
 /var/lib/hugetlbfs/pagesize-16GB rw,seclabel,relatime,pagesize=16384M
 
-  hugeadm  --pool-list
+$ hugeadm  --pool-list
       Size  Minimum  Current  Maximum  Default
   16777216       20       20       20        *
 17179869184        0        0        0         
 
 
+$ hugectl bin/hugepagesd &
+
+
+$ PROC=4991
+$ grep -A3 '/var/lib/hugetlbfs/pagesize-16MB/demo' /proc/${PROC}/smaps
+7efff8000000-7f0000000000 rw-s 00000000 00:2f 63535                      /var/lib/hugetlbfs/pagesize-16MB/demo
+Size:             131072 kB
+KernelPageSize:    16384 kB
+MMUPageSize:       16384 kB
+
+$ grep HugePages_ /proc/meminfo
+HugePages_Total:      20
+HugePages_Free:       17
+HugePages_Rsvd:        5
+HugePages_Surp:        0
+
+<hr>
 
 
 
 
 
-
-
-
-# grep Hugepagesize /proc/meminfo
-Hugepagesize:      16384 kB
 
 
 To allocate our 2048 Huge Pages we can use:
 
 # echo 2048 > /proc/sys/vm/nr_hugepages
 
-    Please Note: Before allocating a big number of Hugepage on a system that is running Virtual Machines or other memory hungry applications, make sure to shutdown your Virtual Machines and any memory hungry application before executing the previous command otherwise the execution may take a long time to complete.
+    
 
 $ ls /sys/kernel/mm/hugepages
 hugepages-16384kB  hugepages-16777216kB
@@ -44,7 +64,7 @@ $ grep HugePages_ /proc/meminfo
 
 To quickly and temporarly allocate them, or we can use:
 
-# sysctl -w vm.nr_hugepages=2048
+
 
 if test -f /sys/kernel/mm/transparent_hugepage/enabled; then
    echo never > /sys/kernel/mm/transparent_hugepage/enabled
@@ -120,6 +140,8 @@ mount -t hugetlbfs -o pagesize=17179869184 none /dev/hugepages16G
 - [Linux: How to force any application to use Hugepages without modifying the source code](https://paolozaino.wordpress.com/2016/10/02/how-to-force-any-linux-application-to-use-hugepages-without-modifying-the-source-code/)
 - [Kernel: HugeTLB Pages](https://www.kernel.org/doc/html/latest/admin-guide/mm/hugetlbpage.html)
 - [Linux Kernel: SelfTests Hugepage example using mmap](https://github.com/torvalds/linux/blob/master/tools/testing/selftests/vm/hugepage-mmap.c)
+- [StackOverflow: Why mmap cannot allocate memory?](https://stackoverflow.com/questions/27634109/why-mmap-cannot-allocate-memory)
+- [Erik Rigtorp: Using huge pages on Linux](https://rigtorp.se/hugepages/)
 
 # Appendix: Install Hugepages Tools
 

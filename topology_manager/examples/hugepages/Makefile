@@ -8,7 +8,7 @@ build:
 .PHONY: build
 
 build-image: 
-	podman build -t 
+	podman build -t quay.io/pbastide_rh/openshift-demo:hugepages-demo-$$(date +%Y%m%d%H%M%S)
 .PHONY: build-image
 
 push-image: 
