@@ -4,7 +4,7 @@
 build: 
 	go fmt ./...
 	go vet ./...
-	go build -o bin/hugepagesd -ldflags "${GO_LDFLAGS}" cmd/main.go
+	go build -o bin/hugepagesd -ldflags "-v ${GO_LDFLAGS}" cmd/main.go
 .PHONY: build
 
 build-image: 

@@ -22,6 +22,9 @@ To quickly and temporarly allocate them, or we can use:
 
 # sysctl -w vm.nr_hugepages=2048
 
+if test -f /sys/kernel/mm/transparent_hugepage/enabled; then
+   echo never > /sys/kernel/mm/transparent_hugepage/enabled
+fi
 
 # hugeadm --pool-list
       Size  Minimum  Current  Maximum  Default
@@ -34,14 +37,64 @@ $ grep -i huge /proc/mounts
 cgroup /sys/fs/cgroup/hugetlb cgroup rw,seclabel,nosuid,nodev,noexec,relatime,hugetlb 0 0
 hugetlbfs /dev/hugepages hugetlbfs rw,seclabel,relatime,pagesize=16M 0 0
 
+grep -B 11 'KernelPageSize: 2048 kB' /proc/73938/smaps | grep "^Size:" | awk 'BEGIN{sum=0}{sum+=$2}END{print sum/1024}'
+
+# echo always >/sys/kernel/mm/transparent_hugepage/enabled
+
+sysctl vm.nr_hugepages
+
+sysctl -a | grep hugepages
+vm.nr_hugepages = 642
+vm.nr_hugepages_mempolicy = 642
+vm.nr_overcommit_hugepages = 676
+
+
+mount -t hugetlbfs \
+      -o uid=<value>,gid=<value>,mode=<value>,pagesize=<value>,size=<value>,\
+      min_size=<value>,nr_inodes=<value> none /mnt/huge
+
+To mount the default huge page size:
+
+# mkdir -p /mnt/hugetlbfs
+# mount -t hugetlbfs none /mnt/hugetlbfs
+
+hugeadm --create-mounts
+
+mount | grep pagesize
+none on /var/lib/hugetlbfs/pagesize-16MB type hugetlbfs (rw,relatime,seclabel,pagesize=16M)
+none on /var/lib/hugetlbfs/pagesize-16GB type hugetlbfs (rw,relatime,seclabel,pagesize=16384M)
+
+gcc-c++
+
+hugeadm --list-all-mounts 
+Mount Point          Options
+/dev/hugepages       rw,seclabel,relatime,pagesize=16M
+
+16K
+# hugeadm --pool-list
+      Size  Minimum  Current  Maximum  Default
+  16777216      642      642     1318        *
+17179869184        0        0        0        
+
+To mount 64KB pages (if the system hardware supports it):
+
+mkdir -p /mnt/hugetlbfs-16K
+mount -t hugetlbfs none -opagesize=16777216 /mnt/hugetlbfs-16K
+
+mkdir /dev/hugepages16G
+mount -t hugetlbfs -o pagesize=17179869184 none /dev/hugepages16G
+
 <hr>
 
 # References
 
+- [Red Hat OpenShift 4.10: How huge pages are consumed by apps](https://docs.openshift.com/container-platform/4.10/scalability_and_performance/what-huge-pages-do-and-how-they-are-consumed-by-apps.html)
 - [Red Hat Customer Portal: [RHEL] How do I check for hugepages usage and what is using it?](https://access.redhat.com/solutions/320303)
+- [Red Hat Customer Portal: How to use, monitor, and disable transparent hugepages in Red Hat Enterprise Linux 6 and 7?](https://access.redhat.com/solutions/46111)
 - [Povilas: Go Memory Management](https://povilasv.me/go-memory-management/)
 - [Red Hat Universal Base Image 8 Minimal](https://catalog.redhat.com/software/containers/ubi8/ubi-minimal/5c359a62bed8bd75a2c3fba8?architecture=ppc64le&container-tabs=gti)
 - [Linux: How to force any application to use Hugepages without modifying the source code](https://paolozaino.wordpress.com/2016/10/02/how-to-force-any-linux-application-to-use-hugepages-without-modifying-the-source-code/)
+- [Kernel: HugeTLB Pages](https://www.kernel.org/doc/html/latest/admin-guide/mm/hugetlbpage.html)
 
 # Appendix: Install Hugepages Tools
 

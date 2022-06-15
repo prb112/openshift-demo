@@ -1,5 +1,7 @@
 package hugepages
 
+// #include "hugepages.c"
+import "C"
 import (
 	"bytes"
 	"fmt"
@@ -37,21 +39,27 @@ func reportMemStats() {
 	}
 }
 
-// Adds to an existing Map
+// Generates Heap Pressure using C
 func addHeapPressure() {
 	defer wg.Done()
-	var storage bytes.Buffer
-	for i := 0; i < 50000000; i++ {
-		// 1 Gbits
-		if storage.Len() >= 1_000_000_000 {
-			break
-		}
-
-		storage.WriteString("abcdefghijklmnopqrstuvwxyz|")
-	}
-	fmt.Printf("[CREATED] Heap Pressure generated is : %.2f MB\n", float64(storage.Len()/1024/1024))
-	wg.Wait()
+	C.generatePressure()
 }
+
+// Adds to an existing Map
+// func addHeapPressure() {
+// 	defer wg.Done()
+// 	var storage bytes.Buffer
+// 	for i := 0; i < 50000000; i++ {
+// 		// 1 Gbits
+// 		if storage.Len() >= 1_000_000_000 {
+// 			break
+// 		}
+
+// 		storage.WriteString("abcdefghijklmnopqrstuvwxyz|")
+// 	}
+// 	fmt.Printf("[CREATED] Heap Pressure generated is : %.2f MB\n", float64(storage.Len()/1024/1024))
+// 	wg.Wait()
+// }
 
 // The command waits for signals to shutdown.
 // The code orchestrates the Report and adding of HEAP Pressure
