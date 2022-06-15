@@ -68,9 +68,9 @@ void generate_pressure()
 	write_bytes(addr);
 	ret = read_bytes(addr);
 
-	munmap(addr, LENGTH);
-	close(fd);
-	unlink(FILE_NAME);
+	//munmap(addr, LENGTH);
+	//close(fd);
+	//unlink(FILE_NAME);
 }
 */
 import "C"

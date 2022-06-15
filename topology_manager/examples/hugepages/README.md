@@ -1,6 +1,30 @@
 # Feature: Topology Manager - Huge Pages Demonstration for OpenShift on Power
 
 
+mmap: Cannot allocate memory
+echo 20 > /proc/sys/vm/nr_hugepages
+https://stackoverflow.com/questions/27634109/why-mmap-cannot-allocate-memory
+
+#  hugeadm  --list-all-mounts 
+Mount Point                      Options
+/dev/hugepages                   rw,seclabel,relatime,pagesize=16M
+/var/lib/hugetlbfs/pagesize-16MB rw,seclabel,relatime,pagesize=16M
+/var/lib/hugetlbfs/pagesize-16GB rw,seclabel,relatime,pagesize=16384M
+
+  hugeadm  --pool-list
+      Size  Minimum  Current  Maximum  Default
+  16777216       20       20       20        *
+17179869184        0        0        0         
+
+
+
+
+
+
+
+
+
+
 # grep Hugepagesize /proc/meminfo
 Hugepagesize:      16384 kB
 
