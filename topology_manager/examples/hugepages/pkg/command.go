@@ -51,7 +51,7 @@ void generate_pressure()
 
 	fd = open(FILE_NAME, O_CREAT | O_RDWR, 0755);
 	if (fd < 0) {
-		perror("Open failed %p\n", FILE_NAME);
+		perror("Open failed %p\n");
 		exit(1);
 	}
 
