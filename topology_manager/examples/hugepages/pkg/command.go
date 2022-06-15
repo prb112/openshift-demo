@@ -7,7 +7,7 @@ package hugepages
 #include <sys/mman.h>
 #include <fcntl.h>
 
-#define FILE_NAME "/dev/hugepages/tmpfile"
+#define FILE_NAME "/var/lib/hugetlbfs/pagesize-16MB/demo"
 #define LENGTH (256UL*1024*1024)
 #define PROTECTION (PROT_READ | PROT_WRITE)
 
