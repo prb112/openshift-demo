@@ -1,6 +1,15 @@
 # Feature: Topology Manager - Huge Pages Demonstration for OpenShift on Power
 
 
+# grep Hugepagesize /proc/meminfo
+Hugepagesize:      16384 kB
+
+
+To allocate our 2048 Huge Pages we can use:
+
+# echo 2048 > /proc/sys/vm/nr_hugepages
+
+    Please Note: Before allocating a big number of Hugepage on a system that is running Virtual Machines or other memory hungry applications, make sure to shutdown your Virtual Machines and any memory hungry application before executing the previous command otherwise the execution may take a long time to complete.
 
 $ ls /sys/kernel/mm/hugepages
 hugepages-16384kB  hugepages-16777216kB
@@ -9,11 +18,23 @@ hugepages-16384kB  hugepages-16777216kB
 $ grep HugePages_ /proc/meminfo
 
 
+To quickly and temporarly allocate them, or we can use:
+
+# sysctl -w vm.nr_hugepages=2048
+
+
+# hugeadm --pool-list
+      Size  Minimum  Current  Maximum  Default
+  16777216      676      676      676        *
+17179869184        0        0        0         
+
 ipcs -m
 
 $ grep -i huge /proc/mounts
 cgroup /sys/fs/cgroup/hugetlb cgroup rw,seclabel,nosuid,nodev,noexec,relatime,hugetlb 0 0
 hugetlbfs /dev/hugepages hugetlbfs rw,seclabel,relatime,pagesize=16M 0 0
+
+<hr>
 
 # References
 
@@ -24,12 +45,24 @@ hugetlbfs /dev/hugepages hugetlbfs rw,seclabel,relatime,pagesize=16M 0 0
 
 # Appendix: Install Hugepages Tools
 
+1. Check that hugectl is provided by your package manager
+
 ```
 yum whatprovides hugectl
 ```
 
+2. Install the Hugectl tools
+
 ```
 yum -y install libhugetlbfs-utils libhugetlbfs
+```
+
+# Appendix: Install Build Tools
+
+The minimum build tools required to build this sample project are `make` and `golang`.
+
+```
+ yum install -y golang make
 ```
 
 # Is this a Red Hat or IBM supported solution?

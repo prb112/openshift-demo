@@ -1,6 +1,7 @@
 package hugepages
 
 import (
+	"bytes"
 	"fmt"
 	"os"
 	"os/signal"
@@ -39,26 +40,27 @@ func reportMemStats() {
 // Adds to an existing Map
 func addHeapPressure() {
 	defer wg.Done()
-	storage := []string{}
+	storage := [][]byte{[]byte("an")}
 	var m runtime.MemStats
 	for i := 0; i < 50000000; i++ {
 		if i%10000 == 0 {
-			// The call to ReadMemStats is slow. 
+			// The call to ReadMemStats is slow.
 			// The conditional check guards against too many slow checks.
 			runtime.ReadMemStats(&m)
 			pressure := float64(m.HeapAlloc) / 1024 / 1024
 			if pressure >= 1000 {
-				fmt.Println("Pressure ", pressure)
+				fmt.Printf("Heap Pressure is : %.2f MB\n", pressure)
 				break
 			}
 		}
 
-		storage = append(storage, "abcdefghijklmnopqrstuvwxyz|abcdefghijklmnopqrstuvwxyz|abcdefghijklmnopqrstuvwxyz|abcdefghijklmnopqrstuvwxyz")
+		joined := bytes.Join(storage, []byte("abcdefghijklmnopqrstuvwxyz|abcdefghijklmnopqrstuvwxyz|abcdefghijklmnopqrstuvwxyz|abcdefghijklmnopqrstuvwxyz"))
+		storage = append(storage, joined)
 	}
 	fmt.Println("Done... creating Memory Pressure")
 }
 
-// The command waits for signals to shutdown. 
+// The command waits for signals to shutdown.
 // The code orchestrates the Report and adding of HEAP Pressure
 func Command() {
 	go waitForShutdown()

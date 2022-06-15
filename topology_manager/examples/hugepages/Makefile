@@ -1,8 +1,10 @@
 # Builds the hugepages-demo
+# GOOS=linux GOARCH=ppc64le 
+
 build: 
 	go fmt ./...
 	go vet ./...
-	GOOS=linux GOARCH=ppc64le go build -o bin/hugepagesd -ldflags "${GO_LDFLAGS}" cmd/main.go
+	go build -o bin/hugepagesd -ldflags "${GO_LDFLAGS}" cmd/main.go
 .PHONY: build
 
 build-image: 
