@@ -41,22 +41,15 @@ func reportMemStats() {
 func addHeapPressure() {
 	defer wg.Done()
 	var storage bytes.Buffer
-	var m runtime.MemStats
 	for i := 0; i < 50000000; i++ {
-		if i%100 == 0 {
-			// The call to ReadMemStats is slow.
-			// The conditional check guards against too many slow checks.
-			runtime.ReadMemStats(&m)
-			pressure := float64(m.HeapAlloc) / 1024 / 1024
-			if pressure >= 1000 {
-				fmt.Printf("Heap Pressure is : %.2f MB\n", pressure)
-				break
-			}
+		// 1 Gbits
+		if storage.Len() >= 1_000_000_000 {
+			break
 		}
 
 		storage.WriteString("abcdefghijklmnopqrstuvwxyz|")
 	}
-	fmt.Println("Done... creating Memory Pressure ", storage.Len())
+	fmt.Printf("[CREATED] Heap Pressure generated is : %.2f MB\n", float64(storage.Len()/1024/1024))
 	wg.Wait()
 }
 
