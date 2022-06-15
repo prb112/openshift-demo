@@ -8,7 +8,8 @@ package hugepages
 #include <fcntl.h>
 
 #define FILE_NAME "/var/lib/hugetlbfs/pagesize-16MB/demo"
-#define LENGTH (256UL*1024*1024)
+// 256UL*1024*1024
+#define LENGTH (36UL*1024*1024)
 #define PROTECTION (PROT_READ | PROT_WRITE)
 
 #ifdef __ia64__
