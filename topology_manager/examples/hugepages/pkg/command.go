@@ -7,7 +7,7 @@ package hugepages
 #include <sys/mman.h>
 #include <fcntl.h>
 
-#define FILE_NAME "/dev/hugepages"
+#define FILE_NAME "/dev/hugepages/tmpfile"
 #define LENGTH (256UL*1024*1024)
 #define PROTECTION (PROT_READ | PROT_WRITE)
 
@@ -51,7 +51,7 @@ void generate_pressure()
 
 	fd = open(FILE_NAME, O_CREAT | O_RDWR, 0755);
 	if (fd < 0) {
-		perror("Open failed %p\n");
+		perror("Open failed");
 		exit(1);
 	}
 
