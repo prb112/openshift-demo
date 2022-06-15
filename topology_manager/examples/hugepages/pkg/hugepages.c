@@ -60,7 +60,7 @@ static int read_bytes(char *addr)
 }
 
 // Loads the 
-void generatePressure(void)
+void generatePressure()
 {
 	void *addr;
 	int fd, ret;
