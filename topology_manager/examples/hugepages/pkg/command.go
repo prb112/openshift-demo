@@ -8,42 +8,12 @@ package hugepages
 #include <fcntl.h>
 
 #define FILE_NAME "/var/lib/hugetlbfs/pagesize-16MB/demo"
-// 256UL*1024*1024
-#define LENGTH (36UL*1024*1024)
+#define LENGTH (128UL*1024*1024)
 #define PROTECTION (PROT_READ | PROT_WRITE)
 
-#ifdef __ia64__
-#define ADDR (void *)(0x8000000000000000UL)
-#define FLAGS (MAP_SHARED | MAP_FIXED)
-#else
+// Only works on ppc64le
 #define ADDR (void *)(0x0UL)
 #define FLAGS (MAP_SHARED)
-#endif
-static void check_bytes(char *addr)
-{
-	printf("First hex is %x\n", *((unsigned int *)addr));
-}
-
-static void write_bytes(char *addr)
-{
-	unsigned long i;
-
-	for (i = 0; i < LENGTH; i++)
-		*(addr + i) = (char)i;
-}
-
-static int read_bytes(char *addr)
-{
-	unsigned long i;
-
-	check_bytes(addr);
-	for (i = 0; i < LENGTH; i++)
-		if (*(addr + i) != (char)i) {
-			printf("Mismatch at %lu\n", i);
-			return 1;
-		}
-	return 0;
-}
 
 void generate_pressure()
 {
@@ -64,13 +34,7 @@ void generate_pressure()
 	}
 
 	printf("Returned address is %p\n", addr);
-	check_bytes(addr);
-	write_bytes(addr);
-	ret = read_bytes(addr);
-
-	//munmap(addr, LENGTH);
-	//close(fd);
-	//unlink(FILE_NAME);
+	ret = read_bytes(addr);	
 }
 */
 import "C"

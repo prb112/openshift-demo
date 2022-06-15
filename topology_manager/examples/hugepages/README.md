@@ -61,7 +61,7 @@ $ grep -i huge /proc/mounts
 cgroup /sys/fs/cgroup/hugetlb cgroup rw,seclabel,nosuid,nodev,noexec,relatime,hugetlb 0 0
 hugetlbfs /dev/hugepages hugetlbfs rw,seclabel,relatime,pagesize=16M 0 0
 
-grep -B 11 'KernelPageSize: 2048 kB' /proc/73938/smaps | grep "^Size:" | awk 'BEGIN{sum=0}{sum+=$2}END{print sum/1024}'
+grep -B 11 'KernelPageSize: 2048 kB' /proc/3831/smaps | grep "^Size:" | awk 'BEGIN{sum=0}{sum+=$2}END{print sum/1024}'
 
 # echo always >/sys/kernel/mm/transparent_hugepage/enabled
 
@@ -119,6 +119,7 @@ mount -t hugetlbfs -o pagesize=17179869184 none /dev/hugepages16G
 - [Red Hat Universal Base Image 8 Minimal](https://catalog.redhat.com/software/containers/ubi8/ubi-minimal/5c359a62bed8bd75a2c3fba8?architecture=ppc64le&container-tabs=gti)
 - [Linux: How to force any application to use Hugepages without modifying the source code](https://paolozaino.wordpress.com/2016/10/02/how-to-force-any-linux-application-to-use-hugepages-without-modifying-the-source-code/)
 - [Kernel: HugeTLB Pages](https://www.kernel.org/doc/html/latest/admin-guide/mm/hugetlbpage.html)
+- [Linux Kernel: SelfTests Hugepage example using mmap](https://github.com/torvalds/linux/blob/master/tools/testing/selftests/vm/hugepage-mmap.c)
 
 # Appendix: Install Hugepages Tools
 
