@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: hugepages-demo
+spec:
+  containers:
+  - securityContext:
+      sysctls:
+      - name: vm.nr_hugepages
+        value: "256"
+        privileged: true
+    image: quay.io/pbastide_rh/openshift-demo:hugepages-demo-20220615163958
+    name: hugepages-demo
+    volumeMounts:
+    - mountPath: /dev/hugepages
+      name: hugepage
+    resources:
+      limits:
+        hugepages-16Mi: 512Mi 
+        memory: "1Gi"
+        cpu: "1"
+  volumes:
+  - name: hugepage
+    emptyDir:
+      medium: HugePages

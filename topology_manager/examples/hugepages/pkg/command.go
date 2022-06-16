@@ -7,7 +7,8 @@ package hugepages
 #include <sys/mman.h>
 #include <fcntl.h>
 
-#define FILE_NAME "/var/lib/hugetlbfs/pagesize-16MB/demo"
+// /var/lib/hugetlbfs/pagesize-16MB is an alternative for testing
+#define FILE_NAME "/dev/hugepages/demo"
 #define LENGTH (128UL*1024*1024)
 #define PROTECTION (PROT_READ | PROT_WRITE)
 
