@@ -1,0 +1,20 @@
+{
+  "cert" : "settings/client.crt",
+  "key" : "settings/client.key",
+  "ca": "settings/ca.crt",
+  "backend": "https://oauth-openshift.apps.ocp-test-de8b.111.111.111.111.xip.io/oauth/authorize",
+  "users": [
+          {
+                  "display_name": "P B",
+                  "email": "test1@demo.org",
+                  "login": "testuser1a",
+                  "hashed": ">>update>>"
+          },
+          {
+                  "display_name": "C B",
+                  "email": "test2@demo.org",
+                  "login": "testuser2b",
+                  "hashed": ">>update>>"
+          }
+  ]
+}

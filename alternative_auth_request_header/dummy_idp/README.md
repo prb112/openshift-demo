@@ -1,0 +1,1 @@
+This is a dummy identity provider to aid with Multi-Architecture development.
