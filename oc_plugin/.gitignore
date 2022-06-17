@@ -1,0 +1,10 @@
+# Build Artifacts
+/bin/
+*.exe
+
+# Test Artifacts
+*.test
+cover.out
+
+# Editor 
+*.swp
