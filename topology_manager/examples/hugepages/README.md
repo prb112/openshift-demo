@@ -301,4 +301,4 @@ MMUPageSize:       16384 kB
 
 # Is this a Red Hat or IBM supported solution?
 
-No. This is only a proof of concept that serves as a good starting point to understand how the Descheduler Profiles works in OpenShift.
+No. This is only a proof of concept that serves as a good starting point to understand how Hugepages works with OpenShift.
