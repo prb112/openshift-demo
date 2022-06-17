@@ -110,19 +110,19 @@ $ oc get node lon06-worker-1.xip.io   -o jsonpath="{.status.allocatable}" | jq -
 
 14. Check that there are allocated Hugepages (on one of the Worker nodes)
 
-1. Switch to the root user
+a. Switch to the root user
 
 ```
 $ sudo -s 
 ```
 
-2. Find the hugepaged process
+b. Find the hugepaged process
 
 ```
 ps -ef | grep hugepaged
 ```
 
-3. Verify the allocated data 
+c. Verify the allocated data 
 
 ```
 $ PROC=27693
@@ -131,6 +131,28 @@ $ grep -A3 'demo' /proc/${PROC}/smaps
 Size:             131072 kB
 KernelPageSize:    16384 kB
 MMUPageSize:       16384 kB
+```
+
+15. Optional. Confirming with the [Downward API](https://kubernetes.io/docs/tasks/inject-data-application/downward-api-volume-expose-pod-information/)
+
+```
+$ oc apply -f manifests/downward-api-pod.yaml
+pod/hugepages-demo created
+```
+
+16. Show the requested hugepages volume details
+
+```
+$ oc exec -it pod/hugepages-demo -- sh
+sh-4.4# echo $REQUESTS_HUGEPAGES_16MI
+536870912
+```
+
+17. Show the podinfo for the hugepages
+
+```
+# oc exec -it $(oc get pods -l app=hugepages-example -o jsonpath='{.items[0].metadata.name}')      -- cat /etc/podinfo/hugepages_16Mi
+0
 ```
 
 # Summary

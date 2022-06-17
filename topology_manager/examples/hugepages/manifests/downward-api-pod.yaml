@@ -1,0 +1,45 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: hugepages-demo
+  labels:
+    app: hugepages-example
+spec:
+  containers:
+  - securityContext:
+      capabilities:
+        add: [ "IPC_LOCK" ]
+      sysctls:
+      - name: vm.nr_hugepages
+        value: "256"
+        privileged: true
+    image: quay.io/pbastide_rh/openshift-demo:hugepages-demo-20220615163958
+    name: hugepages-demo
+    volumeMounts:
+    - mountPath: /dev/hugepages
+      name: hugepage
+    - mountPath: /etc/podinfo
+      name: podinfo
+    resources:
+      limits:
+        hugepages-16Mi: 512Mi 
+        memory: "1Gi"
+        cpu: "1"
+    env:
+    - name: REQUESTS_HUGEPAGES_16MI 
+      valueFrom:
+        resourceFieldRef:
+          containerName: hugepages-demo
+          resource: requests.hugepages-16Mi
+  volumes:
+  - name: hugepage
+    emptyDir:
+      medium: HugePages
+  - name: podinfo
+    downwardAPI:
+      items:
+        - path: "hugepages_16Mi" 
+          resourceFieldRef:
+            containerName: hugepages-demo
+            resource: requests.hugepages-1Gi
+            divisor: 1Gi
