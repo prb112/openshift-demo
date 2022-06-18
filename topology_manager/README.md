@@ -7,6 +7,7 @@ Included in this document are supporting use-cases to see how the feature works 
 # Use Cases
 
 **`<`To Be Added`>`**
+1. [1_Topology_Manager_with_Hugepages.md](1_Topology_Manager_with_Hugepages.md)
 
 # References
 The following are useful references related to the Topology Manager. 

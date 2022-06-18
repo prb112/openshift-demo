@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: cpumanager
+  labels: 
+    app: cpumanager
+spec:
+  containers:
+  - name: cpumanager
+    image: docker.io/ibmcom/pause-ppc64le:3.1
+    resources:
+      requests:
+        cpu: 1
+        memory: "1G"
+      limits:
+        cpu: 1
+        memory: "1G"
+  nodeSelector:
+    cpumanager: "enabled"
