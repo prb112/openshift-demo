@@ -132,7 +132,7 @@ $ oc -n test get pods -o=custom-columns='Name:metadata.name,NodeName:spec.nodeNa
 Name             NodeName
 backend-nh8kt    worker-0.xip.io
 backend-tb55w    worker-1.xip.io
-frontend-52mbm   worker-0.xip.io
+frontend-33mbm   worker-1.xip.io
 frontend-m6wdm   worker-1.xip.io
 frontend-nbm9c   worker-2.xip.io
 ```
