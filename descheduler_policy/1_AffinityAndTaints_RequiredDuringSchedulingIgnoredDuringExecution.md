@@ -25,7 +25,7 @@ kubedescheduler.operator.openshift.io/cluster created
 $ oc -n openshift-kube-descheduler-operator get cm cluster -o=yaml
 ```
 
-This ConfigMap should show the excluded namespaces and `RemovePodsViolatingNodeAffinity.params.nodeAffinityType` is `requiredDuringSchedulingIgnoredDuringExecution` is set.
+This ConfigMap should show the excluded namespaces and `RemovePodsViolatingNodeAffinity.params.nodeAffinityType` has `requiredDuringSchedulingIgnoredDuringExecution` in the list.
 
 3. Check the descheduler cluster 
 
@@ -35,14 +35,7 @@ $ oc -n openshift-kube-descheduler-operator logs -l app=descheduler
 
 This log should show a started Descheduler.
 
-4. Create a test namespace
-
-```
-$ oc get namespace test || oc create namespace test
-namespace/test created
-```
-
-5. Label the zones so it's unbalanced (a,b)
+4. Label the zones so it's unbalanced (a,b).  You can get the nodes using `oc get nodes`.
 
 a. `worker-0`
 
@@ -58,14 +51,14 @@ $ oc label node 'worker-1.xip.io' topology.kubernetes.io/zone=a
 node/worker-1.xip.io not labeled
 ```
 
-SKIP c. `worker-2`
+c. `worker-2`
 
 ```
 $ oc label node 'worker-2.xip.io' topology.kubernetes.io/zone=b
 node/worker-1.xip.io not labeled
 ```
 
-5. Create a ReplicaSet
+5. Create the Namespace and ReplicaSet
 
 ```
 $ oc -n test apply -f files/1_AffinityAndTaints_RequiredDuringSchedulingIgnoredDuringExecution_dp.yml
@@ -94,7 +87,7 @@ node/worker-1.xip.io unlabeled
 ```
 $ oc -n test get pods -o=custom-columns='Name:metadata.name,NodeName:spec.nodeName'
 Name       NodeName
-ua-6466x   worker-0.xip.io
+ua-6466x   worker-1.xip.io
 ua-hjjbt   worker-1.xip.io
 ua-mh4td   worker-1.xip.io
 ```
