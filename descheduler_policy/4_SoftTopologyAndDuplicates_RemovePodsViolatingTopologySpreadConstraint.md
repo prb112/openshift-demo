@@ -23,7 +23,7 @@ kubedescheduler.operator.openshift.io/cluster created
 $ oc -n openshift-kube-descheduler-operator get cm cluster -o=yaml
 ```
 
-This ConfigMap should show the excluded namespaces and `strategies.RemovePodsViolatingTopologySpreadConstraint` and `includeSoftConstraints: true` is configured.
+This ConfigMap should show the excluded namespaces and `strategies.RemovePodsViolatingTopologySpreadConstraint.includeSoftConstraints: true` is configured.
 
 3. Check the descheduler cluster 
 

@@ -35,7 +35,7 @@ kubedescheduler.operator.openshift.io/cluster created
 oc -n openshift-kube-descheduler-operator get cm cluster -o=yaml
 ```
 
-This ConfigMap should show the excluded namespaces and `strategies.RemovePodsViolatingTopologySpreadConstraint` and `includeSoftConstraints: false` is configured.
+This ConfigMap should show the excluded namespaces and `strategies.RemovePodsViolatingTopologySpreadConstraint.includeSoftConstraints: false` is configured.
 
 3. Check the descheduler cluster 
 
@@ -67,14 +67,7 @@ node/worker-0.xip.io labeled
 b. `worker-1`
 
 ```
-$ oc label node 'worker-1.xip.io' topology.kubernetes.io/zone=a
-node/worker-1.xip.io not labeled
-```
-
-SKIP c. `worker-2`
-
-```
-$ oc label node 'worker-2.xip.io' topology.kubernetes.io/zone=b
+$ oc label node 'worker-1.xip.io' topology.kubernetes.io/zone=b
 node/worker-1.xip.io not labeled
 ```
 
@@ -98,7 +91,7 @@ c. third replicaset
 
 ```
 $ oc -n test apply -f files/2_TopologyAndDuplicates_rs_c.yml                                          
-replicaset.apps/ub created
+replicaset.apps/uc created
 ```
 
 6. Verify the pods are scheduled on `worker-0`.
@@ -115,7 +108,7 @@ uc-4f52z   worker-2.xip.io
 uc-kkffv   worker-1.xip.io
 ```
 
-7. Add a label to worker-1
+7. Remove a label to worker-1
 
 ```
 $ oc label node 'worker-1.xip.io' topology.kubernetes.io/zone-
@@ -123,10 +116,10 @@ node/worker-1.xip.io unlabeled
 ```
 
 
-8. Reassing the label for worker-1
+8. Reassign the label for worker-2
 
 ```
-oc label node 'worker-1.xip.io' topology.kubernetes.io/zone=a 
+oc label node 'worker-1.xip.io' topology.kubernetes.io/zone=b
 node/worker-1.xip.io labeled
 ```
 
