@@ -19,6 +19,17 @@ There are two tests included:
 
 ## Steps
 
+*Heads Up* 
+
+If you are running on 4.12, you may need to setup additional settings for `nfs-provisioner` to address a Kubernetes 1.25 change to Pod Security.
+
+```
+$ oc label namespace/nfs-provisioner0 security.openshift.io/scc.podSecurityLabelSync=false 
+$ oc label namespace/nfs-provisioner0 pod-security.kubernetes.io/enforce=privileged 
+$ oc label namespace/nfs-provisioner0 pod-security.kubernetes.io/audit=privileged 
+$ oc label namespace/nfs-provisioner0 pod-security.kubernetes.io/warn=privileged
+```
+
 1. Update the EvictPodsWithPVC Policy
 
 ```
@@ -32,7 +43,7 @@ kubedescheduler.operator.openshift.io/cluster created
 $ oc -n openshift-kube-descheduler-operator get cm cluster -o=yaml
 ```
 
-This ConfigMap should show the excluded namespaces and `ignorePvcPods: true`.
+This ConfigMap should show the excluded namespaces and `ignorePvcPods: false`.
 
 3. Check the descheduler cluster 
 
@@ -52,7 +63,7 @@ namespace/test created
 5. Create a PersistentVolume, PersistentVolumeClaim and Deployment
 
 ```
-$ oc -n test apply -f files/6_EvictPodsWithPVC_dp.yml    
+$ oc -n test apply -f files/6_EvictPodsWithPVC_dp.yml
 persistentvolume/evict-pv created
 persistentvolumeclaim/evict-pvc created
 deployment.apps/lifetime-store created
