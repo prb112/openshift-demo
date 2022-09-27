@@ -98,7 +98,7 @@ I0512 17:53:29.016475       1 evictions.go:160] "Evicted pod" pod="test/lifetime
 I0512 17:53:29.016625       1 pod_lifetime.go:110] "Evicted pod because it exceeded its lifetime" pod="test/lifetime-store-d474d8fd8-n6snx" maxPodLifeTime=300
 ```
 
-10. Update the EvictPodsWithPVC Policy
+10. Update the EvictPodsWithPVC Policy to exclude the PVC
 
 ```
 $ oc apply -n openshift-kube-descheduler-operator -f files/6_EvictPodsWithPVC_no.yml
