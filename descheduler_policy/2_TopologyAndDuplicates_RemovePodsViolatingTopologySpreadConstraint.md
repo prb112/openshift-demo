@@ -76,7 +76,7 @@ node/worker-1.xip.io labeled
 c. `worker-2`
 
 ```
-$ oc label node 'worker-2.xip.io' custom=a
+$ oc label node 'worker-2.xip.io' custom=b
 node/worker-2.xip.io labeled
 ```
 
@@ -143,7 +143,7 @@ Note, you can use `oc -n test get pods -o=custom-columns='Name:metadata.name,Nod
 9. Verify the logs show an eviction based on the deschedulerPodTopologySpread
 
 ```
-$ oc -n openshift-kube-descheduler-operator logs -l app=descheduler  --tail=20000 | | grep deschedulerPodTop
+$ oc -n openshift-kube-descheduler-operator logs -l app=descheduler  --tail=20000 | grep deschedulerPodTop
 I0928 19:43:09.447104       1 event.go:294] "Event occurred" object="test/uc-rfdkq" fieldPath="" kind="Pod" apiVersion="v1" type="Normal" reason="Descheduled" message="pod evicted by sigs.k8s.io/deschedulerPodTopologySpread"
 ```
 
