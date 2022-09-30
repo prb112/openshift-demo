@@ -23,7 +23,7 @@ kubedescheduler.operator.openshift.io/cluster created
 $ oc -n openshift-kube-descheduler-operator get cm cluster -o=yaml
 ```
 
-This ConfigMap should show the excluded namespaces and `strategies.RemoveDuplicates` is configured and `includeSoftConstraints: true`
+This ConfigMap should show the excluded namespaces and `strategies.RemoveDuplicates` is configured and `includeSoftConstraints: false`
 
 3. Check the descheduler cluster 
 
