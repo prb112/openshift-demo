@@ -52,7 +52,7 @@ $ oc get namespace test || oc create namespace test
 namespace/test created
 ```
 
-5. [Cordon](https://docs.openshift.com/container-platform/4.10/nodes/nodes/nodes-nodes-working.html) one of the workers so we unbalance the number of assigned pods. 
+5. [Cordon](https://docs.openshift.com/container-platform/4.11/nodes/nodes/nodes-nodes-working.html) one of the workers so we unbalance the number of assigned pods. 
 
 a. List the nodes
 

@@ -9,7 +9,7 @@ spec:
   operatorLogLevel: Normal
   deschedulingIntervalSeconds: 60
   profileCustomizations:
-    podLifetime: 5d
+    podLifetime: '120h'
   profiles:
     - LifecycleAndUtilization
   managementState: Managed
