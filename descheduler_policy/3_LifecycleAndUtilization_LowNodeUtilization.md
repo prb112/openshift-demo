@@ -111,20 +111,33 @@ $ oc -n openshift-kube-descheduler-operator logs -l app=descheduler  --tail=200
 I0511 20:53:59.692336       1 descheduler.go:287] "Number of evicted pods" totalEvicted=5
 ```
 
+You might see the following
+
+```
+I1004 17:12:38.927608       1 lownodeutilization.go:118] "Criteria for a node under utilization" CPU=20 Mem=20 Pods=20
+I1004 17:12:38.927620       1 lownodeutilization.go:119] "Number of underutilized nodes" totalNumber=2
+I1004 17:12:38.927632       1 lownodeutilization.go:132] "Criteria for a node above target utilization" CPU=50 Mem=50 Pods=50
+I1004 17:12:38.927642       1 lownodeutilization.go:133] "Number of overutilized nodes" totalNumber=0
+I1004 17:12:38.927652       1 lownodeutilization.go:151] "All nodes are under target utilization, nothing to do here"
+I1004 17:12:38.927664       1 descheduler.go:304] "Number of evicted pods" totalEvicted=0
+```
+
+It indicates you need to raise the memory utilization.
+
 10. Check the pods are now redistributed. 
 
 ```
 $ oc -n test get pods -o=custom-columns='DATA:metadata.name,DATA:spec.nodeName'
-unbalanced-6d757874c4-5bsmlworker-0.rdr-rhop.sslip.io
-unbalanced-6d757874c4-bjxfrworker-0.rdr-rhop.sslip.io
-unbalanced-6d757874c4-bsmqkworker-1.rdr-rhop.sslip.io
-unbalanced-6d757874c4-ccns4worker-0.rdr-rhop.sslip.io
-unbalanced-6d757874c4-kvx7qworker-1.rdr-rhop.sslip.io
-unbalanced-6d757874c4-ldvfnworker-0.rdr-rhop.sslip.io
-unbalanced-6d757874c4-m5tgbworker-0.rdr-rhop.sslip.io
-unbalanced-6d757874c4-nlfkmworker-1.rdr-rhop.sslip.io
-unbalanced-6d757874c4-nrxwgworker-1.rdr-rhop.sslip.io
-unbalanced-6d757874c4-rdkmxworker-1.rdr-rhop.sslip.io
+unbalanced-6d757874c4-5bsml worker-0.rdr-rhop.sslip.io
+unbalanced-6d757874c4-bjxfr worker-0.rdr-rhop.sslip.io
+unbalanced-6d757874c4-bsmqk worker-1.rdr-rhop.sslip.io
+unbalanced-6d757874c4-ccns4 worker-0.rdr-rhop.sslip.io
+unbalanced-6d757874c4-kvx7q worker-1.rdr-rhop.sslip.io
+unbalanced-6d757874c4-ldvfn worker-0.rdr-rhop.sslip.io
+unbalanced-6d757874c4-m5tgb worker-0.rdr-rhop.sslip.io
+unbalanced-6d757874c4-nlfkm worker-1.rdr-rhop.sslip.io
+unbalanced-6d757874c4-nrxwg worker-1.rdr-rhop.sslip.io
+unbalanced-6d757874c4-rdkmx worker-1.rdr-rhop.sslip.io
 ```
 
 11. Delete the deployment
