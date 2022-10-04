@@ -10,4 +10,4 @@ The purpose of this repository is to provide a set of simple proof-of-concept co
 
 # Is this a Red Hat or IBM supported solution?
 
-No. This is only a proof-of-concept that serves as a good starting point to understand how the various features works with OpenShift.
+No. This is only a proof-of-concept that serves as a good starting point to understand how the various features work with OpenShift.
