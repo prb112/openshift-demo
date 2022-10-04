@@ -19,44 +19,21 @@ There are two tests included:
 
 ## Steps
 
-1. Update the EvictPodsWithLocalStorage Policy
-
-```
-$ oc apply -n openshift-kube-descheduler-operator -f files/5_EvictPodsWithLocalStorage.yml
-kubedescheduler.operator.openshift.io/cluster created
-```
-
-2. Check the configmap to see the Descheduler Policy. 
-
-```
-$ oc -n openshift-kube-descheduler-operator get cm cluster -o=yaml
-```
-
-This ConfigMap should show the excluded namespaces and `evictLocalStoragePods: true`.
-
-3. Check the descheduler cluster 
-
-```
-$ oc -n openshift-kube-descheduler-operator logs -l app=descheduler 
-```
-
-This log should show a started Descheduler.
-
-4. Create a test namespace
+1. Create a test namespace
 
 ```
 $ oc get namespace test || oc create namespace test
 namespace/test created
 ```
 
-5. Create a Deployment with an emptyDir volume
+2. Create a Deployment with an emptyDir volume
 
 ```
 $ oc apply -n test -f files/5_EvictPodsWithLocalStorage_dp.yml
 deployment.apps/local-pvc created
 ```
 
-6. Check that the pods are started.
+3. Check that the pods are started.
 
 ```
 $ oc -n test get pods       
@@ -64,7 +41,30 @@ NAME                         READY   STATUS    RESTARTS   AGE
 local-pvc-64555d976d-54565   1/1     Running   0          26s
 ```
 
-7. Once you see a new set of pods created, the Eviction has happened, and it should show up in the logs. Wait on the logs to be updated.
+4. Update the EvictPodsWithLocalStorage Policy
+
+```
+$ oc apply -n openshift-kube-descheduler-operator -f files/5_EvictPodsWithLocalStorage.yml
+kubedescheduler.operator.openshift.io/cluster created
+```
+
+5. Check the configmap to see the Descheduler Policy. 
+
+```
+$ oc -n openshift-kube-descheduler-operator get cm cluster -o=yaml
+```
+
+This ConfigMap should show the excluded namespaces and `evictLocalStoragePods: true`.
+
+6. Check the descheduler cluster 
+
+```
+$ oc -n openshift-kube-descheduler-operator logs -l app=descheduler 
+```
+
+This log should show a started Descheduler.
+
+8. Once you see a new set of pods created, the Eviction has happened, and it should show up in the logs. Wait on the logs to be updated.
 
 ```
 $ oc -n openshift-kube-descheduler-operator logs -l app=descheduler --since=10h --tail=2000 | grep local-pvc
@@ -77,7 +77,7 @@ I0512 18:58:33.650269       1 evictions.go:160] "Evicted pod" pod="test/local-pv
 I0512 18:58:33.690168       1 pod_lifetime.go:110] "Evicted pod because it exceeded its lifetime" pod="test/local-pvc-64555d976d-54565" maxPodLifeTime=300
 ```
 
-10. Update the EvictPodsWithLocalStorage Policy
+10. *You may need to redeploy or restart the NFS if it is evicted* Update the EvictPodsWithLocalStorage Policy
 
 ```
 $ oc apply -n openshift-kube-descheduler-operator -f files/5_EvictPodsWithLocalStorage_no.yml
