@@ -30,37 +30,14 @@ $ oc label namespace/nfs-provisioner0 pod-security.kubernetes.io/audit=privilege
 $ oc label namespace/nfs-provisioner0 pod-security.kubernetes.io/warn=privileged
 ```
 
-1. Update the EvictPodsWithPVC Policy
-
-```
-$ oc apply -n openshift-kube-descheduler-operator -f files/6_EvictPodsWithPVC.yml
-kubedescheduler.operator.openshift.io/cluster created
-```
-
-2. Check the configmap to see the Descheduler Policy. 
-
-```
-$ oc -n openshift-kube-descheduler-operator get cm cluster -o=yaml
-```
-
-This ConfigMap should show the excluded namespaces and `ignorePvcPods: false`.
-
-3. Check the descheduler cluster 
-
-```
-$ oc -n openshift-kube-descheduler-operator logs -l app=descheduler 
-```
-
-This log should show a started Descheduler.
-
-4. Create a test namespace
+1. Create a test namespace
 
 ```
 $ oc get namespace test || oc create namespace test
 namespace/test created
 ```
 
-5. Create a PersistentVolume, PersistentVolumeClaim and Deployment
+2. Create a PersistentVolume, PersistentVolumeClaim and Deployment
 
 ```
 $ oc -n test apply -f files/6_EvictPodsWithPVC_dp.yml
@@ -69,7 +46,7 @@ persistentvolumeclaim/evict-pvc created
 deployment.apps/lifetime-store created
 ```
 
-6. Check that the evict-pv PV is available
+3. Check that the evict-pv PV is available
 
 ```
 $ oc -n test get persistentvolume/evict-pv
@@ -77,13 +54,36 @@ NAME     CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS      CLAIM           
 evict-pv   1Gi        RWO            Retain           Available   default/claim1                           19s
 ```
 
-7. Check the pvc is Bound
+4. Check the pvc is Bound
 
 ```
 $ oc -n test get persistentvolumeclaim/evict-pvc                                                                                           130 ↵
 NAME        STATUS   VOLUME     CAPACITY   ACCESS MODES   STORAGECLASS   AGE
 evict-pvc   Bound    evict-pv   1Gi        RWX                           11m
 ```
+
+5. Update the EvictPodsWithPVC Policy
+
+```
+$ oc apply -n openshift-kube-descheduler-operator -f files/6_EvictPodsWithPVC.yml
+kubedescheduler.operator.openshift.io/cluster created
+```
+
+6. Check the configmap to see the Descheduler Policy. 
+
+```
+$ oc -n openshift-kube-descheduler-operator get cm cluster -o=yaml
+```
+
+This ConfigMap should show the excluded namespaces and `ignorePvcPods: false`.
+
+7. Check the descheduler cluster 
+
+```
+$ oc -n openshift-kube-descheduler-operator logs -l app=descheduler 
+```
+
+This log should show a started Descheduler.
 
 8. Once you see a new set of pods created, the Eviction has happened, and it should show up in the logs. Wait on the logs to be updated.
 
