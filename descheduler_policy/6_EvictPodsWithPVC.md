@@ -21,13 +21,15 @@ There are two tests included:
 
 *Heads Up* 
 
-If you are running on 4.12, you may need to setup additional settings for `nfs-provisioner` to address a Kubernetes 1.25 change to Pod Security.
+You should install NFS support to the `openshift-nfs-provisioner` namespace. Otherwise it may be evicted.
+
+If you are running on 4.12, you may need to setup additional settings for [`openshift-nfs-provisioner`](https://github.com/kubernetes-sigs/nfs-subdir-external-provisioner) to address a Kubernetes 1.25 change to Pod Security.
 
 ```
-$ oc label namespace/nfs-provisioner0 security.openshift.io/scc.podSecurityLabelSync=false 
-$ oc label namespace/nfs-provisioner0 pod-security.kubernetes.io/enforce=privileged 
-$ oc label namespace/nfs-provisioner0 pod-security.kubernetes.io/audit=privileged 
-$ oc label namespace/nfs-provisioner0 pod-security.kubernetes.io/warn=privileged
+$ oc label namespace/openshift-nfs-provisioner security.openshift.io/scc.podSecurityLabelSync=false 
+$ oc label namespace/openshift-nfs-provisioner pod-security.kubernetes.io/enforce=privileged 
+$ oc label namespace/openshift-nfs-provisioner pod-security.kubernetes.io/audit=privileged 
+$ oc label namespace/openshift-nfs-provisioner pod-security.kubernetes.io/warn=privileged
 ```
 
 1. Create a test namespace
