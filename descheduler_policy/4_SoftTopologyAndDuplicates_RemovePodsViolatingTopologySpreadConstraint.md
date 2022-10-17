@@ -110,14 +110,7 @@ $ oc -n test apply -f files/4_SoftTopologyAndDuplicates_RemovePodsViolatingTopol
 replicaset.apps/uc created
 ```
 
-7. Uncordon the second node.
-
-```
-$ oc adm uncordon worker-1.xip.io
-node/worker-2.xip.io cordoned
-```
-
-8. Verify the pods distributed between the two nodes.
+7. Verify the pods distributed between the two nodes.
 
 ```
 $ oc -n test get pods -o=custom-columns='Name:metadata.name,NodeName:spec.nodeName'
@@ -128,6 +121,13 @@ ub-7j6bw   worker-0.xip.io
 ub-rhhx8   worker-1.xip.io
 uc-4f52z   worker-1.xip.io
 uc-kkffv   worker-0.xip.io
+```
+
+8. Uncordon the second node.
+
+```
+$ oc adm uncordon worker-2.xip.io
+node/worker-2.xip.io cordoned
 ```
 
 Note, you can use `oc -n test get pods -o=custom-columns='Name:metadata.name,NodeName:spec.nodeName' | grep -v NodeName | awk '{print $NF}' | sort | uniq -c` to see the node / pod distribution.
