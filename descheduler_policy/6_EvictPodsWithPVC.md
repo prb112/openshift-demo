@@ -141,3 +141,5 @@ persistentvolume/evict-pv deleted
 # Summary 
 
 You have seen how to use EvictPodsWithPVC.
+
+Note, the [defaultevictor.go](https://github.com/kubernetes-sigs/descheduler/blob/master/pkg/framework/plugins/defaultevictor/defaultevictor.go#L173-L194) checks the pod labels/source to see if it 'should' be evicted. You may need to apply a label to indicate that it should not.
