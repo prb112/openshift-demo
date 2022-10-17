@@ -80,11 +80,11 @@ $ oc label node 'worker-2.xip.io' custom=b
 node/worker-2.xip.io labeled
 ```
 
-5. Cordon the second node.
+5. Cordon the worker-1 node.
 
 ```
-$ oc adm cordon worker-2.xip.io
-node/worker-2.xip.io cordoned
+$ oc adm cordon worker-1.xip.io
+node/worker-1.xip.io cordoned
 ```
 
 6. Create the ReplicaSet
@@ -123,11 +123,11 @@ uc-4f52z   worker-1.xip.io
 uc-kkffv   worker-0.xip.io
 ```
 
-8. Uncordon the second node.
+8. Uncordon the worker-1 node.
 
 ```
-$ oc adm uncordon worker-2.xip.io
-node/worker-2.xip.io cordoned
+$ oc adm uncordon worker-1.xip.io
+node/worker-1.xip.io cordoned
 ```
 
 Note, you can use `oc -n test get pods -o=custom-columns='Name:metadata.name,NodeName:spec.nodeName' | grep -v NodeName | awk '{print $NF}' | sort | uniq -c` to see the node / pod distribution.
