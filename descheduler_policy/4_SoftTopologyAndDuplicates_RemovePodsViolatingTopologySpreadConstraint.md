@@ -83,7 +83,7 @@ node/worker-2.xip.io labeled
 5. Cordon the second node.
 
 ```
-$ oc adm cordon worker-1.xip.io
+$ oc adm cordon worker-2.xip.io
 node/worker-2.xip.io cordoned
 ```
 
