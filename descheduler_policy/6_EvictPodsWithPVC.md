@@ -32,20 +32,7 @@ $ oc label namespace/openshift-nfs-provisioner pod-security.kubernetes.io/audit=
 $ oc label namespace/openshift-nfs-provisioner pod-security.kubernetes.io/warn=privileged
 ```
 
-If you did not install the `nfs-provisioner` in the openshift-* namespace, then you can: 
-
-1. Get `nfs-provisioner` deployment's nfs-pod
-
-```
-oc get pods -n nfs-provisioner
-```
-
-2. Annotate the pod so it isn't evicted. 
-
-```
-oc annotate -n nfs-provisioner pod/nfs-client-provisioner-5b67bcdcf-2v2hf  kubernetes.io/config.source=
-pod/nfs-client-provisioner-5b67bcdcf-2v2hf annotated
-```
+Note, these tests exclude the namespace `nfs-provisioner`.
 
 # Steps 
 
