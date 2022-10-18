@@ -3,6 +3,7 @@ kind: PersistentVolume
 metadata:
   name: evict-pv
 spec:
+  storageClassName: nfs-client
   capacity:
     storage: 1Gi
   accessModes:
