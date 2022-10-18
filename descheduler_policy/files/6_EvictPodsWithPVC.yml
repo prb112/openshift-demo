@@ -10,6 +10,9 @@ spec:
   deschedulingIntervalSeconds: 60
   profileCustomizations:
     podLifetime: 1m0s
+    namespaces:
+      excluded:
+        - 'nfs-provisioner '
   profiles:
     - LifecycleAndUtilization
     - EvictPodsWithPVC
