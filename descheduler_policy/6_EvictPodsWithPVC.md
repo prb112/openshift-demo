@@ -45,6 +45,8 @@ namespace/test created
 
 2. Create a PersistentVolume, PersistentVolumeClaim and Deployment
 
+Note, before applying, you may need to apply the [`StorageClassName`](https://github.com/prb112/openshift-demo/blob/main/descheduler_policy/files/6_EvictPodsWithPVC_dp.yml#L6)
+
 ```
 $ oc -n test apply -f files/6_EvictPodsWithPVC_dp.yml
 persistentvolume/evict-pv created
