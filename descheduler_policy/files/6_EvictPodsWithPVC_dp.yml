@@ -20,6 +20,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: evict-pvc
 spec:
+  storageClassName: nfs-client
   accessModes:
     - ReadWriteMany
   volumeName: evict-pv
