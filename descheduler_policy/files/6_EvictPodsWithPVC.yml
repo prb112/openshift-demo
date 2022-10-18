@@ -12,7 +12,7 @@ spec:
     podLifetime: 1m0s
     namespaces:
       excluded:
-        - 'nfs-provisioner '
+        - 'nfs-provisioner'
   profiles:
     - LifecycleAndUtilization
     - EvictPodsWithPVC
