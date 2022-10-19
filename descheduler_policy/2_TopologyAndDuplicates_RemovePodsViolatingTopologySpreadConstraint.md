@@ -103,7 +103,7 @@ $ oc -n test apply -f files/2_TopologyAndDuplicates_rs_c.yml
 replicaset.apps/uc created
 ```
 
-6. Verify the pods are split and worker-2 has most of the load.
+6. Verify the pod's load is split.
 
 ```
 $ oc -n test get pods -o=custom-columns='Name:metadata.name,NodeName:spec.nodeName'
@@ -143,7 +143,7 @@ Note, you can use `oc -n test get pods -o=custom-columns='Name:metadata.name,Nod
 9. Verify the logs show an eviction based on the deschedulerPodTopologySpread
 
 ```
-$ oc -n openshift-kube-descheduler-operator logs -l app=descheduler  --tail=20000 | grep deschedulerPodTop
+$ oc -n openshift-kube-descheduler-operator logs -l app=descheduler --tail=20000 | grep deschedulerPodTop
 I0928 19:43:09.447104       1 event.go:294] "Event occurred" object="test/uc-rfdkq" fieldPath="" kind="Pod" apiVersion="v1" type="Normal" reason="Descheduled" message="pod evicted by sigs.k8s.io/deschedulerPodTopologySpread"
 ```
 
@@ -165,8 +165,7 @@ This is a simple realignment of pods using a topology spread constraint.
 1. Check the Node-Pod Distribution
 
 ```
-$ oc -n test get pods -o=custom-columns='Name:metadata.name,NodeName:spec.nodeName' | grep -v NodeName | awk '{print $NF}'  | sort | uniq -c
-   1 NodeName
+$ oc -n test get pods -o=custom-columns='Name:metadata.name,NodeName:spec.nodeName' | grep -v NodeName | awk '{print $NF}' | sort | uniq -c
    4 worker-1.xip.io
    2 worker-2.xip.io
    1 worker-0.xip.io
