@@ -15,6 +15,6 @@ spec:
     spec:
       containers:
       - name: lifetime
-        image: docker.io/ibmcom/pause-ppc64le:3.1
+        image: registry.access.redhat.com/ubi8/pause:latest
         imagePullPolicy: IfNotPresent
       restartPolicy: Always

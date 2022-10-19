@@ -45,7 +45,7 @@ namespace/test created
 a. List the nodes
 
 ```
-$ oc get nodes
+$ oc get nodes -lnode-role.kubernetes.io/worker
 ```
 
 b. Select a worker node, such as `worker-1.rdr-rhop.sslip.io` 
