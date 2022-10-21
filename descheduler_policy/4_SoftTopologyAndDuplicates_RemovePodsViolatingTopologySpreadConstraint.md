@@ -69,7 +69,7 @@ node/worker-0.xip.io labeled
 b. `worker-1`
 
 ```
-$ oc label node 'worker-1.xip.io' custom=a
+$ oc label node 'worker-1.xip.io' custom=b
 node/worker-1.xip.io labeled
 ```
 
@@ -80,11 +80,11 @@ $ oc label node 'worker-2.xip.io' custom=b
 node/worker-2.xip.io labeled
 ```
 
-5. Cordon the worker-1 node.
+5. Cordon the worker-2 node.
 
 ```
-$ oc adm cordon worker-1.xip.io
-node/worker-1.xip.io cordoned
+$ oc adm cordon worker-2.xip.io
+node/worker-2.xip.io cordoned
 ```
 
 6. Create the ReplicaSet
@@ -123,11 +123,11 @@ uc-4f52z   worker-1.xip.io
 uc-kkffv   worker-0.xip.io
 ```
 
-8. Uncordon the worker-1 node.
+8. Uncordon the worker-2 node.
 
 ```
-$ oc adm uncordon worker-1.xip.io
-node/worker-1.xip.io cordoned
+$ oc adm uncordon worker-2.xip.io
+node/worker-2.xip.io cordoned
 ```
 
 Note, you can use `oc -n test get pods -o=custom-columns='Name:metadata.name,NodeName:spec.nodeName' | grep -v NodeName | awk '{print $NF}' | sort | uniq -c` to see the node / pod distribution.
@@ -173,7 +173,6 @@ This is a simple realignment of pods using a topology spread constraint and Soft
 
 ```
 $ oc -n test get pods -o=custom-columns='Name:metadata.name,NodeName:spec.nodeName' | grep -v NodeName | awk '{print $NF}'  | sort | uniq -c
-   1 NodeName
    4 worker-1.xip.io
    2 worker-2.xip.io
    1 worker-0.xip.io
