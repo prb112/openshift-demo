@@ -62,7 +62,7 @@ Note, you'll see `Error from server (NotFound): namespaces "test" not found` if 
 a. `worker-0`
 
 ```
-$ oc label node 'worker-0.xip.io' custom=a
+$ oc label node 'worker-0.xip.io' custom=a 
 node/worker-0.xip.io labeled
 ```
 
