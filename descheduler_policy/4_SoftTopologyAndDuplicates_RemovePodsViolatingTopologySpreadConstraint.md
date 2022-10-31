@@ -130,9 +130,17 @@ $ oc adm uncordon worker-2.xip.io
 node/worker-2.xip.io cordoned
 ```
 
+9. Reassign node labels 
+
+```
+oc label node worker-0.xip.io custom=a --overwrite=true
+oc label node worker-1.xip.io custom=b --overwrite=true
+oc label node worker-2.xip.io --overwrite=true
+```
+
 Note, you can use `oc -n test get pods -o=custom-columns='Name:metadata.name,NodeName:spec.nodeName' | grep -v NodeName | awk '{print $NF}' | sort | uniq -c` to see the node / pod distribution.
 
-9. Check the Pod distribution to see the rebalancing.
+10. Check the Pod distribution to see the rebalancing.
 
 ```
 $ oc -n test get pods -o=custom-columns='Name:metadata.name,NodeName:spec.nodeName'
