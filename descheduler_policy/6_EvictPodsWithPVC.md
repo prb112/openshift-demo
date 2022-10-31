@@ -17,6 +17,8 @@ There are two tests included:
 1. Running with a Deployment > Pod with PVC Storage and the EvictPodsWithPVC
 2. Running with a Deployment > Pod with PVC Storage and no EvictPodsWithPVC
 
+Note: `nfs-storage-provisioner` is used for the PersistentVolumeClaim, you may need to alter to `nfs-client` or something appropriate for your environment.
+
 ## Steps
 
 *Heads Up* 
