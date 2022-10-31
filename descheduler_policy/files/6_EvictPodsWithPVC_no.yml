@@ -13,6 +13,8 @@ spec:
     namespaces:
       excluded:
         - 'nfs-provisioner'
+      included:
+        - 'test'
   profiles:
     - LifecycleAndUtilization
   managementState: Managed
