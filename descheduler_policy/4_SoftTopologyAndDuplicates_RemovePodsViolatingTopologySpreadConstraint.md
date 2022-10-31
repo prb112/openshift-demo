@@ -135,7 +135,7 @@ node/worker-2.xip.io cordoned
 ```
 oc label node worker-0.xip.io custom=a --overwrite=true
 oc label node worker-1.xip.io custom=b --overwrite=true
-oc label node worker-2.xip.io --overwrite=true
+oc label node worker-2.xip.io custom=b --overwrite=true
 ```
 
 Note, you can use `oc -n test get pods -o=custom-columns='Name:metadata.name,NodeName:spec.nodeName' | grep -v NodeName | awk '{print $NF}' | sort | uniq -c` to see the node / pod distribution.
