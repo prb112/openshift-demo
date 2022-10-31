@@ -11,8 +11,6 @@ spec:
   profileCustomizations:
     podLifetime: 1m0s
     namespaces:
-      excluded:
-        - 'nfs-provisioner'
       included:
         - 'test'
   profiles:
