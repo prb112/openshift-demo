@@ -134,7 +134,7 @@ node/worker-2.xip.io cordoned
 
 ```
 oc label node worker-0.xip.io custom=a --overwrite=true
-oc label node worker-1.xip.io custom=b --overwrite=true
+oc label node worker-1.xip.io custom=a --overwrite=true
 oc label node worker-2.xip.io custom=b --overwrite=true
 ```
 
