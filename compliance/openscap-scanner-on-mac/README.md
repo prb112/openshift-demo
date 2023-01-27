@@ -10,8 +10,6 @@ Here are the steps to running on a Mac with [`complianceascode/content`](https:/
 
 1. Download the Docker File 
 
-<< Add notes about the DockerFile>>
-
 2. Build the Image
 
 ```
