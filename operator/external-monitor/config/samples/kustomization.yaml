@@ -1,0 +1,4 @@
+## Append samples of your project ##
+resources:
+- external-monitor.ocp-power.xyz_v1alpha1_monitor.yaml
+#+kubebuilder:scaffold:manifestskustomizesamples
