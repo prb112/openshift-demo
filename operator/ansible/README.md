@@ -12,7 +12,7 @@ f2a111264e30a0338fa76cd07aae86b4089c1974d676e8cfc467841926d5fc71
 2. Add a layer 
 
 ```
-COPY --chown=1001:0 /opt/ol/wlp/usr /opt/ol/wlp/usr
+COPY script/ .
 ```
 
 3. Run the container
