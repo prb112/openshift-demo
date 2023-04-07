@@ -1,8 +1,8 @@
 # external-monitor
-// TODO(user): Add simple overview of use/purpose
+The External Monitor Operator
 
 ## Description
-// TODO(user): An in-depth paragraph about your project and overview of use
+
 
 ## Getting Started
 You’ll need a Kubernetes cluster to run against. You can use [KIND](https://sigs.k8s.io/kind) to get a local cluster for testing, or run against a remote cluster.
@@ -11,9 +11,49 @@ You’ll need a Kubernetes cluster to run against. You can use [KIND](https://si
 ### Running on the cluster
 1. Install Instances of Custom Resources:
 
-```sh
-kubectl apply -f config/samples/
-```
+❯ kubectl apply -f config/crd/bases/external-monitor.ocp-power.xyz_monitors.yaml
+\customresourcedefinition.apiextensions.k8s.io/monitors.external-monitor.ocp-power.xyz created
+
+openshift-demo/operator/external-monitor on  main [✘!?] via 🐹 v1.20.2
+❯ kubectl apply -f config/samples/external-monitor.ocp-power.xyz_v1alpha1_monitor.yaml
+monitor.external-monitor.ocp-power.xyz/monitor-sample created
+
+❯ oc get monitor.external-monitor.ocp-power.xyz/monitor-sample
+NAME             AGE
+monitor-sample   26s
+
+❯ oc get monitor.external-monitor.ocp-power.xyz/monitor-sample -o yaml
+apiVersion: external-monitor.ocp-power.xyz/v1alpha1
+kind: Monitor
+metadata:
+annotations:
+kubectl.kubernetes.io/last-applied-configuration: |
+{"apiVersion":"external-monitor.ocp-power.xyz/v1alpha1","kind":"Monitor","metadata":{"annotations":{},"labels":{"app.kubernetes.io/created-by":"external-monitor","app.kubernetes.io/instance":"monitor-sample","app.kubernetes.io/managed-by":"kustomize","app.kubernetes.io/name":"monitor","app.kubernetes.io/part-of":"external-monitor"},"name":"monitor-sample","namespace":"acmeair"},"spec":{"image":"quay.io/pbastide_rh/openshift-demo","name_value":["a=b","c=d"],"tag":"co-content-latest"}}
+creationTimestamp: "2023-04-07T00:34:29Z"
+generation: 1
+labels:
+app.kubernetes.io/created-by: external-monitor
+app.kubernetes.io/instance: monitor-sample
+app.kubernetes.io/managed-by: kustomize
+app.kubernetes.io/name: monitor
+app.kubernetes.io/part-of: external-monitor
+name: monitor-sample
+namespace: acmeair
+resourceVersion: "1126786"
+uid: 8c24e682-a382-403f-9a8d-a6eef93f0678
+spec:
+image: quay.io/pbastide_rh/openshift-demo
+name_value:
+- a=b
+- c=d
+  tag: co-content-latest
+
+❯ make generate
+test -s /Users/paulbastide/Desktop/work/multiarch_base_ocp/openshift-demo/operator/external-monitor/bin/controller-gen && /Users/paulbastide/Desktop/work/multiarch_base_ocp/openshift-demo/operator/external-monitor/bin/controller-gen --version | grep -q v0.11.1 || \
+GOBIN=/Users/paulbastide/Desktop/work/multiarch_base_ocp/openshift-demo/operator/external-monitor/bin go install sigs.k8s.io/controller-tools/cmd/controller-gen@v0.11.1
+/Users/paulbastide/Desktop/work/multiarch_base_ocp/openshift-demo/operator/external-monitor/bin/controller-gen object:headerFile="hack/boilerplate.go.txt" paths="./..."
+
+
 
 2. Build and push your image to the location specified by `IMG`:
 

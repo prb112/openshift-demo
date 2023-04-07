@@ -5,9 +5,9 @@ metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.11.1
   creationTimestamp: null
-  name: monitors.external-monitor.ocp-power.xyz.external-monitor.ocp-power.xyz
+  name: monitors.external-monitor.ocp-power.xyz
 spec:
-  group: external-monitor.ocp-power.xyz.external-monitor.ocp-power.xyz
+  group: external-monitor.ocp-power.xyz
   names:
     kind: Monitor
     listKind: MonitorList
@@ -35,9 +35,16 @@ spec:
           spec:
             description: MonitorSpec defines the desired state of Monitor
             properties:
-              foo:
-                description: Foo is an example field of Monitor. Edit monitor_types.go
-                  to remove/update
+              image:
+                description: Image is the Image to use
+                type: string
+              name_value:
+                description: Name/Value array used when starting the Job
+                items:
+                  type: string
+                type: array
+              tag:
+                description: Tag is the image tag to use
                 type: string
             type: object
           status:

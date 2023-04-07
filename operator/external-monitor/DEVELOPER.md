@@ -14,3 +14,5 @@ Thought about using the plugin... however, it's a bit more complicated, as we wa
 
 ❯ make manifests
 
+// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
+// Important: Run "make" to regenerate code after modifying this file

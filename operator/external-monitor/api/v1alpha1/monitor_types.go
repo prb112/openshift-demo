@@ -1,17 +1,7 @@
 /*
-Copyright 2023.
+Copyright IBM Corp. 2023
 
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
+SPDX-License-Identifier: Apache-2.0
 */
 
 package v1alpha1
@@ -25,17 +15,18 @@ import (
 
 // MonitorSpec defines the desired state of Monitor
 type MonitorSpec struct {
-	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
-	// Important: Run "make" to regenerate code after modifying this file
+	// Image is the Image to use
+	Image string `json:"image,omitempty"`
 
-	// Foo is an example field of Monitor. Edit monitor_types.go to remove/update
-	Foo string `json:"foo,omitempty"`
+	// Tag is the image tag to use
+	Tag string `json:"tag,omitempty"`
+
+	// Name/Value array used when starting the Job
+	Name []string `json:"name_value,omitempty"`
 }
 
 // MonitorStatus defines the observed state of Monitor
 type MonitorStatus struct {
-	// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
-	// Important: Run "make" to regenerate code after modifying this file
 }
 
 //+kubebuilder:object:root=true

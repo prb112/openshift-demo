@@ -4,4 +4,4 @@ kind: CustomResourceDefinition
 metadata:
   annotations:
     cert-manager.io/inject-ca-from: CERTIFICATE_NAMESPACE/CERTIFICATE_NAME
-  name: monitors.external-monitor.ocp-power.xyz.external-monitor.ocp-power.xyz
+  name: monitors.external-monitor.ocp-power.xyz
