@@ -23,6 +23,9 @@ type MonitorSpec struct {
 
 	// Name/Value array used when starting the Job
 	Name []string `json:"name_value,omitempty"`
+
+	// Path in the container to the Ansible YAML that is to be executed
+	Path string `json:"path,omitempty"`
 }
 
 // MonitorStatus defines the observed state of Monitor

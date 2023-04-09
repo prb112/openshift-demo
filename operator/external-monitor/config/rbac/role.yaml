@@ -6,7 +6,7 @@ metadata:
   name: manager-role
 rules:
 - apiGroups:
-  - external-monitor.ocp-power.xyz.external-monitor.ocp-power.xyz
+  - external-monitor.ocp-power.xyz
   resources:
   - monitors
   verbs:
@@ -18,13 +18,13 @@ rules:
   - update
   - watch
 - apiGroups:
-  - external-monitor.ocp-power.xyz.external-monitor.ocp-power.xyz
+  - external-monitor.ocp-power.xyz
   resources:
   - monitors/finalizers
   verbs:
   - update
 - apiGroups:
-  - external-monitor.ocp-power.xyz.external-monitor.ocp-power.xyz
+  - external-monitor.ocp-power.xyz
   resources:
   - monitors/status
   verbs:

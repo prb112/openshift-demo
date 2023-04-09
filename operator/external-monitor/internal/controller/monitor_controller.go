@@ -59,13 +59,32 @@ func (r *MonitorReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ct
 
 	// Check if the CronJob already exists, if not create a new one
 	found := &batch.CronJob{}
-
-
-
-	_ =
+	_ = found
+	/*
+		apiVersion: batch/v1
+		kind: CronJob
+		metadata:
+		  name: hello
+		spec:
+		  schedule: "* * * * *"
+		  jobTemplate:
+		    spec:
+		      template:
+		        spec:
+		          containers:
+		          - name: hello
+		            image: busybox:1.28
+		            imagePullPolicy: IfNotPresent
+		            command:
+		            - /bin/sh
+		            - -c
+		            - date; echo Hello from the Kubernetes cluster
+		          restartPolicy: OnFailure
+	*/
+	//monitor.Spec.Tag
+	//	monitor.Spec.Name
 
 	// TODO(user): your logic here
-	req.
 
 	return ctrl.Result{}, nil
 }
