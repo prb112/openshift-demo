@@ -35,6 +35,9 @@ spec:
           spec:
             description: MonitorSpec defines the desired state of Monitor
             properties:
+              deployment_name:
+                description: The Deployment Name
+                type: string
               image:
                 description: Image is the Image to use
                 type: string
@@ -47,12 +50,34 @@ spec:
                 description: Path in the container to the Ansible YAML that is to
                   be executed
                 type: string
+              recovery_image:
+                description: Recovery Image is the Image to use
+                type: string
+              recovery_name_value:
+                description: Recovery Name/Value array used when starting the Job
+                items:
+                  type: string
+                type: array
+              recovery_path:
+                description: Recovery Path in the container to the Ansible YAML that
+                  is to be executed
+                type: string
+              recovery_tag:
+                description: Recovery Tag is the image tag to use
+                type: string
               tag:
                 description: Tag is the image tag to use
                 type: string
             type: object
           status:
             description: MonitorStatus defines the observed state of Monitor
+            properties:
+              recovery_status:
+                description: The status of the job recovering the deployment
+                type: string
+              status:
+                description: The status of the running deployment
+                type: string
             type: object
         type: object
     served: true

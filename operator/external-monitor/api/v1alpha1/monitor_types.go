@@ -1,6 +1,5 @@
 /*
 Copyright IBM Corp. 2023
-
 SPDX-License-Identifier: Apache-2.0
 */
 
@@ -9,9 +8,6 @@ package v1alpha1
 import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
-
-// EDIT THIS FILE!  THIS IS SCAFFOLDING FOR YOU TO OWN!
-// NOTE: json tags are required.  Any new fields you add must have json tags for the fields to be serialized.
 
 // MonitorSpec defines the desired state of Monitor
 type MonitorSpec struct {
@@ -26,10 +22,30 @@ type MonitorSpec struct {
 
 	// Path in the container to the Ansible YAML that is to be executed
 	Path string `json:"path,omitempty"`
+
+	// Recovery Image is the Image to use
+	RecoveryImage string `json:"recovery_image,omitempty"`
+
+	// Recovery Tag is the image tag to use
+	RecoveryTag string `json:"recovery_tag,omitempty"`
+
+	// Recovery Name/Value array used when starting the Job
+	RecoveryName []string `json:"recovery_name_value,omitempty"`
+
+	// Recovery Path in the container to the Ansible YAML that is to be executed
+	RecoveryPath string `json:"recovery_path,omitempty"`
+
+	// The Deployment Name
+	Deployment string `json:"deployment_name,omitempty"`
 }
 
 // MonitorStatus defines the observed state of Monitor
 type MonitorStatus struct {
+	// The status of the running deployment
+	Status string `json:"status,omitempty"`
+
+	// The status of the job recovering the deployment
+	RecoveryStatus string `json:"recovery_status,omitempty"`
 }
 
 //+kubebuilder:object:root=true

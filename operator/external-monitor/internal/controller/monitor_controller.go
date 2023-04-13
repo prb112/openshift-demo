@@ -29,15 +29,7 @@ type MonitorReconciler struct {
 //+kubebuilder:rbac:groups=external-monitor.ocp-power.xyz,resources=monitors/status,verbs=get;update;patch
 //+kubebuilder:rbac:groups=external-monitor.ocp-power.xyz,resources=monitors/finalizers,verbs=update
 
-// Reconcile is part of the main kubernetes reconciliation loop which aims to
-// move the current state of the cluster closer to the desired state.
-// TODO(user): Modify the Reconcile function to compare the state specified by
-// the Monitor object against the actual cluster state, and then
-// perform operations to make the cluster state reflect the state specified by
-// the user.
-//
-// For more details, check Reconcile and its Result here:
-// - https://pkg.go.dev/sigs.k8s.io/controller-runtime@v0.14.1/pkg/reconcile
+// Reconcile is part of the main kubernetes reconciliation loop which aims the controller
 func (r *MonitorReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error) {
 	l := log.FromContext(ctx)
 
@@ -53,12 +45,15 @@ func (r *MonitorReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ct
 			return ctrl.Result{}, nil
 		}
 		// Error reading the object - requeue the request.
-		l.Error(err, "Failed to get Memcached")
+		l.Error(err, "Failed to get Monitor")
 		return ctrl.Result{}, err
+	} else {
+		l.WithValues("key", monitor).V(0).Info("XReached this part of the code")
 	}
 
 	// Check if the CronJob already exists, if not create a new one
 	found := &batch.CronJob{}
+	l.V(0).Info("Reached this part of the code")
 	_ = found
 	/*
 		apiVersion: batch/v1

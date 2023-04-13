@@ -28,6 +28,10 @@ spec:
       - name: kube-rbac-proxy
         securityContext:
           allowPrivilegeEscalation: false
+          runAsNonRoot: true
+          privileged: false
+          seccompProfile:
+            type: RuntimeDefault
           capabilities:
             drop:
               - "ALL"
