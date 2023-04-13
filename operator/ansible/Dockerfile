@@ -1,3 +1,4 @@
+# https://learn.microsoft.com/en-us/azure/developer/ansible/configure-in-docker-container?tabs=azure-cli
 # https://github.com/ansible-community/ansible-bender
 # https://ansible-community.github.io/ansible-bender/build/html/index.html
 FROM quay.io/centos/centos:stream9 AS runner
@@ -36,7 +37,3 @@ WORKDIR /ansible
 
 ENTRYPOINT ["/root/.local/bin/ansible-playbook"]
 CMD ["--version" ]
-
-#COPY --chown=1001:0 /opt/ol/wlp/usr /opt/ol/wlp/usr
-
-# https://learn.microsoft.com/en-us/azure/developer/ansible/configure-in-docker-container?tabs=azure-cli
