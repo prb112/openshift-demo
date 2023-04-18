@@ -18,22 +18,32 @@ ARG PACKAGE_LIST="\
   make \
   git \
   python3-devel \
+  nfs-utils \
+  nfs4-acl-tools \
 "
 
 RUN set -ex \
     && dnf install -y --nodocs ${PACKAGE_LIST}  \
-    && dnf clean all -y \
-    && python3 -m pip install --upgrade --user ansible 
+    && dnf clean all -y
 
 RUN pip3 install --upgrade pip \
-    && pip3 install --upgrade virtualenv \
     && pip3 install requests \
     && python3 -m pip install ansible
 
-RUN find / -iname '*ansible*' && mkdir /ansible && \
-    mkdir -p /etc/ansible
-
 WORKDIR /ansible
 
-ENTRYPOINT ["/root/.local/bin/ansible-playbook"]
-CMD ["--version" ]
+RUN groupadd -r ansible -g 1001 \
+    && useradd -u 1001 -r -g 1001 -m -d /ansible -s /sbin/nologin ansible
+
+RUN mkdir -p /.ansible/tmp \
+    && chmod -R 755 /.ansible \
+    && mkdir -p /ansible/.ansible \
+    && mkdir -p /ansible/.ansible/tmp \
+    && chmod -R 755 /ansible \
+    && chown -R ansible:ansible /ansible \
+    && chown -R ansible:ansible /.ansible
+
+USER 1001
+
+#ENTRYPOINT ["/usr/local/bin/ansible-playbook"]
+#CMD ["--version" ]

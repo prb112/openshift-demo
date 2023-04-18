@@ -7,6 +7,11 @@ SPDX-License-Identifier: Apache-2.0
 package controller
 
 import (
+	"fmt"
+	"github.com/prb112/openshift-demo/operator/external-monitor/bindata"
+	v1 "k8s.io/api/batch/v1"
+	"k8s.io/apimachinery/pkg/runtime"
+	"k8s.io/apimachinery/pkg/runtime/serializer"
 	"path/filepath"
 	"testing"
 
@@ -30,6 +35,20 @@ import (
 var cfg *rest.Config
 var k8sClient client.Client
 var testEnv *envtest.Environment
+
+func TestAssets(t *testing.T) {
+	// job.yaml
+	b, _ := bindata.Asset("assets/job.yaml")
+	decoder := serializer.NewCodecFactory(scheme.Scheme).UniversalDecoder()
+	object := &v1.Job{}
+
+	err := runtime.DecodeInto(decoder, b, object)
+	if err != nil {
+		fmt.Println(err)
+	}
+	fmt.Println(object)
+
+}
 
 func TestAPIs(t *testing.T) {
 	RegisterFailHandler(Fail)

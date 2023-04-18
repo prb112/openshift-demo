@@ -3,7 +3,6 @@
 
 /*
 Copyright IBM Corp. 2023
-
 SPDX-License-Identifier: Apache-2.0
 */
 
@@ -79,6 +78,11 @@ func (in *MonitorSpec) DeepCopyInto(out *MonitorSpec) {
 	*out = *in
 	if in.Name != nil {
 		in, out := &in.Name, &out.Name
+		*out = make([]string, len(*in))
+		copy(*out, *in)
+	}
+	if in.RecoveryName != nil {
+		in, out := &in.RecoveryName, &out.RecoveryName
 		*out = make([]string, len(*in))
 		copy(*out, *in)
 	}
