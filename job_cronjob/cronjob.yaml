@@ -1,0 +1,60 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: is-up-nfs
+spec:
+  # “At minute 0, 10, 20, 30, 40, and 50.”
+  #schedule: "0,10,20,30,40,50 * * * *"
+  schedule: "* * * * *"
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: is-up-nfs
+              image: quay.io/pbastide_rh/openshift-demo:is-up-latest
+              imagePullPolicy: IfNotPresent #Always
+              volumeMounts:
+              - name: is-up-check
+                mountPath: "/etc/ansible/ansible.cfg"
+                subPath: cfg
+                readOnly: true
+              - name: is-up-check
+                mountPath: "/ansible/id_rsa"
+                subPath: id_rsa
+                readOnly: true
+              - name: is-up-check
+                mountPath: "/ansible/inventory"
+                subPath: inventory.yaml
+                readOnly: true
+              - name: is-up-check
+                mountPath: "/ansible/task.yaml"
+                subPath: task
+                readOnly: true
+              - mountPath: /.ansible
+                name: cache-volume
+              command:
+                - /usr/local/bin/ansible-playbook
+                - -vvvv
+                - -i
+                - inventory
+                - /ansible/task.yaml
+              securityContext:
+                privileged: false
+                runAsNonRoot: true
+                runAsUser: 1000
+                fsGroup: 1000
+                allowPrivilegeEscalation: false
+                seccompProfile:
+                  type: RuntimeDefault
+                capabilities:
+                  drop:
+                    - ALL
+          restartPolicy: Never
+          volumes:
+          - name: is-up-check
+            secret:
+              secretName: is-up-check
+          - name: cache-volume
+            emptyDir: {}
