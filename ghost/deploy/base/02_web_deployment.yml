@@ -55,4 +55,4 @@ spec:
       volumes:
       - name: web-content
         persistentVolumeClaim:
-          claimName: web-content
+          claimName: web-content-1
