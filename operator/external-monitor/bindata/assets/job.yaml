@@ -2,7 +2,7 @@ apiVersion: batch/v1
 kind: Job
 metadata:
   name: bring-up-nfs
-  namespace: default
+  namespace: ghost
 spec:
   template:
     spec:
@@ -38,8 +38,8 @@ spec:
           securityContext:
             privileged: false
             runAsNonRoot: true
-            runAsUser: 1000
-            fsGroup: 1000
+            runAsUser: 1000670000
+            fsGroup: 1000670000
             allowPrivilegeEscalation: false
             seccompProfile:
               type: RuntimeDefault

@@ -78,7 +78,7 @@ func (r *MonitorReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ct
 		seconds, _ := time.ParseDuration("30s")
 		for {
 			opts := []client.ListOption{
-				client.InNamespace("default"),
+				client.InNamespace("ghost"),
 			}
 			list := &v1.CronJobList{}
 			err2 := r.List(ctx, list, opts...)
@@ -97,7 +97,7 @@ func (r *MonitorReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ct
 
 				// prefix is used to select the Pod
 				opts := []client.ListOption{
-					client.InNamespace("default"),
+					client.InNamespace("ghost"),
 				}
 				list := &v12.PodList{}
 				err32 := r.List(ctx, list, opts...)
