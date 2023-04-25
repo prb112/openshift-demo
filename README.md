@@ -9,6 +9,7 @@ The purpose of this repository is to provide a set of simple proof-of-concept co
 1. [Topology Manager](topology_manager) aligns pod resources for optimal CPU, Memory, Device and other Topology placements in a cluster.
 1. [Ghost](ghost/) uses kustomize to deploy a working ghost blogging site.
 1. [compliance/openscap-scanner-on-mac](compliance/openscap-scanner-on-mac) how to run the compliance oscap tool on Mac.
+1. [job cronjob](job_cronjob) shows advanced job and cronjob definitions.
 
 # Is this a Red Hat or IBM supported solution?
 
