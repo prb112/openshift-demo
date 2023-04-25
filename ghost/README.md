@@ -23,20 +23,20 @@ Note, save the output...
 4. Generate the working url for the cluster/ghost app.
 
 ```
-$ export WEB_DOMAIN=https://web-route-ghost.apps.$(oc get ingress.config.openshift.io cluster -o yaml | grep domain | awk '{print $NF}')
+$ export WEB_DOMAIN=https://web-route-ghost.$(oc get ingress.config.openshift.io cluster -o yaml | grep domain | awk '{print $NF}')
 $ echo ${WEB_DOMAIN}
 ```
 
 5. Create the secret for the database
 
 ```
-$ cat secrets/01_db_secret.yml | sed "s|ENV_PASS|${ENV_PASS}|" | oc apply -f -
+$ cat deploy/secrets/01_db_secret.yml | sed "s|ENV_PASS|${ENV_PASS}|" | oc apply -f -
 ```
 
 6. Create the configmap for the Ghost app URL. 
 
 ```
-$ cat secrets/02_web_cm.yml | sed "s|WEB_DOMAIN|${WEB_DOMAIN}|" | oc apply -f -
+$ cat deploy/secrets/02_web_cm.yml | sed "s|WEB_DOMAIN|${WEB_DOMAIN}|" | oc apply -f -
 ```
 
 7. Create the deployment for the website
