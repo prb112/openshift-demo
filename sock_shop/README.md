@@ -14,7 +14,7 @@ The purpose of this application is to use a reference microservices demo to show
 
 The architecture is:
 
-[image.png](https://raw.githubusercontent.com/microservices-demo/microservices-demo.github.io/master/assets/Architecture.png)
+![image.png](https://raw.githubusercontent.com/microservices-demo/microservices-demo.github.io/master/assets/Architecture.png)
 
 ### Testing the Multiarchitecture Compute
 1. [e2e-test](https://github.com/microservices-demo/e2e-tests)
