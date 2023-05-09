@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: db-service
+  labels:
+    app: ghost
+spec:
+  ports:
+  - port: 3306
+  selector:
+    app: ghost
+    tier: db
+  clusterIP: None

@@ -1,0 +1,34 @@
+FROM maven:latest as builder
+
+USER 0
+RUN mkdir -p /src/ && cd /src/ \
+    && git clone https://github.com/microservices-demo/orders
+
+# Decided to split the steps here to avoid rebuilding/cloning needlessly.
+
+RUN cd src/orders && mvn clean package -DskipTests && find . -iname '*.jar'
+
+USER 1001
+
+FROM registry.access.redhat.com/ubi8/openjdk-11:1.15-1.1682059493
+
+ENV	SERVICE_USER=myuser \
+	SERVICE_UID=10001 \
+	SERVICE_GROUP=mygroup \
+	SERVICE_GID=10001
+
+USER 0
+RUN microdnf update -y \
+    && microdnf install -y nc tzdata openssl curl ca-certificates fontconfig glibc-langpack-en gzip tar findutils shadow-utils \
+    && groupadd -r -g ${SERVICE_GID} ${SERVICE_GROUP} \
+    && useradd -r -u ${SERVICE_UID} -g ${SERVICE_GROUP} -m -d /home/${SERVICE_USER} -s /sbin/nologin ${SERVICE_USER}
+
+WORKDIR /
+EXPOSE 80
+
+COPY --from=builder /src/orders/target/*.jar ./app.jar
+RUN	chown -R ${SERVICE_USER}:${SERVICE_GROUP} ./app.jar
+
+USER ${SERVICE_USER}
+
+ENTRYPOINT ["/usr/local/bin/java.sh","-jar","./app.jar", "--port=80"]

@@ -34,7 +34,7 @@ kubedescheduler.operator.openshift.io/cluster created
 $ oc -n openshift-kube-descheduler-operator get cm cluster -o=yaml
 ```
 
-This ConfigMap should show the excluded namespaces and the nodeResourceUtilizationThresholds. Note, this impacts all strategies in the profile. 
+This ConfigMap should show the excluded namespaces and the `nodeResourceUtilizationThresholds`. Note, this impacts all strategies in the profile. 
 
 3. Check the descheduler cluster 
 

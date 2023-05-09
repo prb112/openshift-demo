@@ -9,7 +9,10 @@ spec:
   operatorLogLevel: Normal
   deschedulingIntervalSeconds: 60
   profileCustomizations:
-    podLifetime: 5m0s
+    podLifetime: 1m0s
+    namespaces:
+      included:
+        - 'test'
   profiles:
     - SoftTopologyAndDuplicates
   managementState: Managed

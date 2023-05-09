@@ -7,7 +7,11 @@ The purpose of this repository is to provide a set of simple proof-of-concept co
 1. [OpenShift RequestHeader Identity Provider with a Test IdP](alternative_auth_request_header) [OpenShift 4.10: Configuring a request header identity provider](https://docs.openshift.com/container-platform/4.10/authentication/identity_providers/configuring-request-header-identity-provider.html) enables an external service to act as an identity provider where a X-Remote-User header to identify the user's identity.
 1. [OpenShift Descheduler Policy](descheduler_policy) shows various use cases with the Descheduler Operator in OpenShift.
 1. [Topology Manager](topology_manager) aligns pod resources for optimal CPU, Memory, Device and other Topology placements in a cluster.
+1. [Ghost](ghost/) uses kustomize to deploy a working ghost blogging site.
+1. [compliance/openscap-scanner-on-mac](compliance/openscap-scanner-on-mac) how to run the compliance oscap tool on Mac.
+1. [job cronjob](job_cronjob) shows advanced job and cronjob definitions.
+1. [Sock Shop](sock_shop) a multi architecture compute demonstration using [Sock Shop](https://github.com/microservices-demo) from WeaveWorks.
 
 # Is this a Red Hat or IBM supported solution?
 
-No. This is only a proof-of-concept that serves as a good starting point to understand how the various features works with OpenShift.
+No. This is only a proof-of-concept that serves as a good starting point to understand how the various features work with OpenShift.

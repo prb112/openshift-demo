@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: foobar-violator-1
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: foo
+  template:
+    metadata:
+      labels:
+        app: foo
+        test: topology-spread-soft-constraint
+      namespace: test
+    spec:
+#      nodeSelector:
+#        topology.kubernetes.io/zone: b
+      containers:
+      - image: registry.access.redhat.com/ubi8/pause:latest
+        imagePullPolicy: IfNotPresent
+        name: foo1
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+          runAsNonRoot: true
+          runAsUser: 1000760000
+          seccompProfile:
+            type: RuntimeDefault
+      topologySpreadConstraints:
+      - labelSelector:
+          matchLabels:
+            app: foo
+        maxSkew: 1
+        topologyKey: skewtest
+        whenUnsatisfiable: ScheduleAnyway

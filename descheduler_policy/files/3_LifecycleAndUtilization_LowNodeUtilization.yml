@@ -4,12 +4,12 @@ metadata:
   name: cluster
   namespace: openshift-kube-descheduler-operator
 spec:
-  logLevel: Normal
+  logLevel: TraceAll
   mode: Automatic
   operatorLogLevel: Normal
   deschedulingIntervalSeconds: 60
   profileCustomizations:
-    podLifetime: 5d
+    podLifetime: '121h'
   profiles:
     - LifecycleAndUtilization
   managementState: Managed

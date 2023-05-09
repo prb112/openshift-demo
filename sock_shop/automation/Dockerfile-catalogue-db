@@ -1,0 +1,9 @@
+FROM mysql:8
+
+# For ppc64le we may have to use ppc64le/mariadb
+
+# ENV MYSQL_ROOT_PASSWORD DEFAULT_PASS
+# ENV MYSQL_ALLOW_EMPTY_PASSWORD=true
+# ENV MYSQL_DATABASE=socksdb
+
+RUN cd /docker-entrypoint-initdb.d/ && curl -O https://raw.githubusercontent.com/microservices-demo/catalogue/master/docker/catalogue-db/data/dump.sql

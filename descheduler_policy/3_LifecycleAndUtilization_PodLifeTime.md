@@ -23,7 +23,7 @@ kubedescheduler.operator.openshift.io/cluster created
 $ oc -n openshift-kube-descheduler-operator get cm cluster -o=yaml
 ```
 
-This ConfigMap should show the excluded namespaces and `podLifeTime.maxPodLifeTimeSeconds: 60`.
+This ConfigMap should show the excluded namespaces and `podLifeTime.maxPodLifeTimeSeconds: 5m0s`.
 
 3. Check the descheduler cluster 
 

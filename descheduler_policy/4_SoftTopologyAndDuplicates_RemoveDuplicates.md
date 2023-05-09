@@ -23,7 +23,7 @@ kubedescheduler.operator.openshift.io/cluster created
 $ oc -n openshift-kube-descheduler-operator get cm cluster -o=yaml
 ```
 
-This ConfigMap should show the excluded namespaces and `strategies.RemoveDuplicates` is configured.
+This ConfigMap should show the excluded namespaces and `strategies.RemoveDuplicates` is configured and `includeSoftConstraints: false`
 
 3. Check the descheduler cluster 
 
@@ -57,20 +57,20 @@ $ oc adm cordon worker-1.rdr-rhop.sslip.io
 node/worker-1.rdr-rhop.sslip.io cordoned
 ```
 
-6. Create a deployment
+6. Create a ReplicaSet
 
 ```
-$ oc -n test apply -f files/4_SoftTopologyAndDuplicates_RemoveDuplicates_dp.yml
-replicaset.apps/unbalanced created
+$ oc -n test apply -f files/4_SoftTopologyAndDuplicates_rs.yml
+replicaset.apps/ua created
 ```
 
 7. Check the pods are all on the other node 
 
 ```
-$ oc -n test get pods -o=custom-columns='Name:metadata.name,NodeName:spec.nodeName' -lapp=unbalanced
+$ oc -n test get pods -o=custom-columns='Name:metadata.name,NodeName:spec.nodeName' -lapp=ua
 Name                          NodeName
-unbalanced-54pmt   worker-1.rdr-rhop.sslip.io
-unbalanced-8mfx8   worker-1.rdr-rhop.sslip.io
+ua-54pmt   worker-0.rdr-rhop.sslip.io
+ua-8mfx8   worker-0.rdr-rhop.sslip.io
 ```
 
 8. Uncordon the worker.
@@ -85,27 +85,27 @@ node/worker-1.rdr-rhop.sslip.io uncordoned
 ```
 $ oc -n openshift-kube-descheduler-operator logs -l app=descheduler  --tail=200                                 
 I0512 19:35:45.106891       1 duplicates.go:199] "Adjusting feasible nodes" owner={namespace:test kind:ReplicaSet name:unbalanced-6d757874c4 imagesHash:docker.io/ibmcom/pause-ppc64le:3.1} from=5 to=2
-I0512 19:35:45.106915       1 duplicates.go:207] "Average occurrence per node" node="worker-1.rdr-rhop.sslip.io" ownerKey={namespace:test kind:ReplicaSet name:unbalanced-6d757874c4 imagesHash:docker.io/ibmcom/pause-ppc64le:3.1} avg=1
-I0512 19:35:45.126413       1 evictions.go:160] "Evicted pod" pod="test/unbalanced-6d757874c4-8mfx8" reason="RemoveDuplicatePods"
+I0512 19:35:45.106915       1 duplicates.go:207] "Average occurrence per node" node="worker-1.rdr-rhop.sslip.io" ownerKey={namespace:test kind:ReplicaSet name:ua-8mfx8 imagesHash:docker.io/ibmcom/pause-ppc64le:3.1} avg=1
+I0512 19:35:45.126413       1 evictions.go:160] "Evicted pod" pod="test/ua-8mfx8" reason="RemoveDuplicatePods"
 I0512 19:35:45.126547       1 descheduler.go:287] "Number of evicted pods" totalEvicted=1
 ```
 
 10. Check the pods are now redistributed. 
 
 ```
-$ oc -n test get pods -o=custom-columns='Name:metadata.name,NodeName:spec.nodeName' -lapp=unbalanced
+$ oc -n test get pods -o=custom-columns='Name:metadata.name,NodeName:spec.nodeName' -lapp=ua
 Name                          NodeName
-unbalanced-54pmt   worker-1.rdr-rhop.sslip.io
-unbalanced-8mfx8   worker-0.rdr-rhop.sslip.io
+ua-54pmt   worker-1.rdr-rhop.sslip.io
+ua-8mfx8   worker-0.rdr-rhop.sslip.io
 ```
 
 11. Delete the deployment
 
 ```
-oc -n test delete replicaset.apps/unbalanced
-replicaset.apps "unbalanced" deleted
+oc -n test delete replicaset.apps/ua
+replicaset.apps "ua" deleted
 ```
 
 ## Summary
 
-This Profile shows the SoftTopologyAndDuplicates and how it causes descheduling and scheduling on the uncordoned *or* maximum of 2 on a node.
+This Profile shows the SoftTopologyAndDuplicates and how it causes descheduling and scheduling, it's basically a duplicate of `TopologyAndDuplicates`.

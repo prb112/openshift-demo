@@ -1,0 +1,55 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: bring-up-nfs
+  namespace: ghost
+spec:
+  template:
+    spec:
+      containers:
+        - name: is-up-nfs
+          image: quay.io/pbastide_rh/openshift-demo:is-up-latest
+          imagePullPolicy: IfNotPresent #Always
+          volumeMounts:
+            - name: bring-up-check
+              mountPath: "/etc/ansible/ansible.cfg"
+              subPath: cfg
+              readOnly: true
+            - name: bring-up-check
+              mountPath: "/ansible/id_rsa"
+              subPath: id_rsa
+              readOnly: true
+            - name: bring-up-check
+              mountPath: "/ansible/inventory"
+              subPath: inventory.yaml
+              readOnly: true
+            - name: bring-up-check
+              mountPath: "/ansible/task.yaml"
+              subPath: task
+              readOnly: true
+            - mountPath: /.ansible
+              name: cache-volume
+          command:
+            - /usr/local/bin/ansible-playbook
+            - -vvvv
+            - -i
+            - inventory
+            - /ansible/task.yaml
+          securityContext:
+            privileged: false
+            runAsNonRoot: true
+            runAsUser: 1000670000
+            fsGroup: 1000670000
+            allowPrivilegeEscalation: false
+            seccompProfile:
+              type: RuntimeDefault
+            capabilities:
+              drop:
+                - ALL
+      restartPolicy: Never
+      volumes:
+        - name: bring-up-check
+          secret:
+            secretName: bring-up-check
+        - name: cache-volume
+          emptyDir: { }

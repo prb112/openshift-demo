@@ -10,6 +10,9 @@ spec:
   deschedulingIntervalSeconds: 60
   profileCustomizations:
     podLifetime: 5m0s
+    namespaces:
+      included:
+        - 'test'
   profiles:
     - LifecycleAndUtilization
   managementState: Managed

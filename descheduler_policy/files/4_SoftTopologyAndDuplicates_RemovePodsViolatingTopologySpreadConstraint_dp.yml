@@ -15,14 +15,14 @@ spec:
     spec:
       topologySpreadConstraints:
         - maxSkew: 1 
-          topologyKey: topology.kubernetes.io/zone 
+          topologyKey: custom 
           whenUnsatisfiable: ScheduleAnyway 
           labelSelector: 
           matchLabels:
             app: unbalanced 
       containers:
       - name: unbalanced
-        image: docker.io/ibmcom/pause-ppc64le:3.1
+        image: registry.access.redhat.com/ubi8/pause:latest
         imagePullPolicy: IfNotPresent
         resources:
           requests:

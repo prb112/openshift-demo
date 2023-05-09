@@ -1,0 +1,27 @@
+# permissions for end users to view monitors.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  labels:
+    app.kubernetes.io/name: clusterrole
+    app.kubernetes.io/instance: monitor-viewer-role
+    app.kubernetes.io/component: rbac
+    app.kubernetes.io/created-by: external-monitor
+    app.kubernetes.io/part-of: external-monitor
+    app.kubernetes.io/managed-by: kustomize
+  name: monitor-viewer-role
+rules:
+- apiGroups:
+  - external-monitor.ocp-power.xyz.external-monitor.ocp-power.xyz
+  resources:
+  - monitors
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - external-monitor.ocp-power.xyz.external-monitor.ocp-power.xyz
+  resources:
+  - monitors/status
+  verbs:
+  - get

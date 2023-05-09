@@ -1,0 +1,14 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+metadata:
+  name: ghost
+namespace: ghost
+resources:
+- 00_ns.yml
+- 01_db_service.yml
+- 01_db_pvc.yml
+- 01_db_deployment.yml
+- 02_web_service.yml
+- 02_web_route.yml
+- 02_web_pvc.yml
+- 02_web_deployment.yml

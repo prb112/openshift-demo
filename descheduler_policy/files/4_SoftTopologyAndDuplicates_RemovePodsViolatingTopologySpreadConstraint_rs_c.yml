@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: uc
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: uc
+  template:
+    metadata:
+      name: uc
+      labels:
+        app: uc
+    spec:
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: custom
+          whenUnsatisfiable: ScheduleAnyway
+          labelSelector:
+            matchLabels:
+              app: uc
+      containers:
+      - name: uc
+        image: registry.access.redhat.com/ubi8/pause:latest
+        imagePullPolicy: IfNotPresent
+      restartPolicy: Always
