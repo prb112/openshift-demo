@@ -8,7 +8,7 @@ Per the Kubernetes documentation, the mutating flavor, called MutatingAdmissionW
 
 For this demonstration, we are using building the code for the webhook.
 
-The code adds an annotation 
+The code adds an annotation and a nodeSelector. It provides a framework for additions.
 
 ### References
 1. [hmcts/k8s-env-injector](https://github.com/hmcts/k8s-env-injector) provided inspiration for this approach and updates the code patterns for the latest kubernetes versions.
