@@ -1,3 +1,15 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: orders-db-pvc
+  namespace: sock-shop
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+  storageClassName: ibmc-vpc-block-10iops-tier
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -36,7 +48,9 @@ spec:
               name: tmp-volume
       volumes:
         - name: tmp-volume
+          persistentVolumeClaim:
+            claimName: orders-db-pvc
           emptyDir:
             medium: Memory
       nodeSelector:
-        kubernetes.io/os: linux
+        node.openshift.io/os_id: rhcos
