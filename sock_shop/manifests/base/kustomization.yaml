@@ -3,8 +3,13 @@ kind: Kustomization
 metadata:
   name: sock-shop
   namespace: sock-shop
+
 generatorOptions:
   disableNameSuffixHash: true
+
+sortOptions:
+   order: fifo
+
 resources:
 - 00-sock-shop-ns.yaml
 - 01-carts-dep.yaml

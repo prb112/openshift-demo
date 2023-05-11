@@ -35,7 +35,7 @@ spec:
             - containerPort: 80
           securityContext:
             runAsNonRoot: true
-            runAsUser: 10001
+            # runAsUser: 10001
             capabilities:
               drop:
                 - all
@@ -50,4 +50,4 @@ spec:
           emptyDir:
             medium: Memory
       nodeSelector:
-        kubernetes.io/os: linux
+        node.openshift.io/os_id: rhcos

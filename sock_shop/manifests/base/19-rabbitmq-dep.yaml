@@ -42,4 +42,4 @@ spec:
             - containerPort: 9090
               name: exporter
       nodeSelector:
-        kubernetes.io/os: linux
+        node.openshift.io/os_id: rhcos
