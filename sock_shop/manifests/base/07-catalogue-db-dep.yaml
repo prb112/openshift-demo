@@ -33,10 +33,9 @@ spec:
           ports:
             - name: mysql
               containerPort: 3306
-
           volumeMounts:
-          - mountPath: /var/lib/mysql
-            name: catalogue-data
+            - mountPath: /var/lib/mysql
+              name: catalogue-data
           securityContext:
             privileged: false
             seccompProfile:
@@ -44,10 +43,10 @@ spec:
             capabilities:
               drop:
                 - ALL
-        volumes:
+      volumes:
         - name: catalogue-data
-          persistentVolumeClaim:
-            claimName: catalogue-db-pvc        
+          emptyDir:
+            medium: Memory
       nodeSelector:
         kubernetes.io/arch: amd64
         node.openshift.io/os_id: rhcos
