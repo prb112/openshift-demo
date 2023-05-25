@@ -30,7 +30,7 @@ spec:
           ports:
             - containerPort: 8080
           command: [ "/user" ]
-          args: [ "-port=8080" ]
+          args: [ "-port=8080", "-mongo-host=user-db:27017" ]
           env:
             - name: mongo
               value: user-db:27017
