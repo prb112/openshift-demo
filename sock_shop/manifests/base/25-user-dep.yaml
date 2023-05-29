@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: user
-          image: quay.io/cbade_cs/openshift-demo:user-0.4.7 #quay.io/cbade_cs/weaveworksdemos:user-0.4.7 #quay.io/cbade_cs/openshift-demo:user01-0.4.7 #quay.io/cbade_cs/weaveworksdemos:user-0.4.7
+          image: quay.io/cbade_cs/openshift-demo:user-0.4.7
           imagePullPolicy: IfNotPresent
           resources:
             limits:
