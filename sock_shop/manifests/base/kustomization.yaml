@@ -45,5 +45,6 @@ resources:
   - 28-user-db-svc.yaml
 secretGenerator:
   - name: mongodb-creds
+    namespace: sock-shop
     envs:
       - .env.secret

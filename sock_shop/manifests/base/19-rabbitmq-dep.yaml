@@ -33,6 +33,7 @@ spec:
             readOnlyRootFilesystem: false
         - name: rabbitmq-exporter
           image: kbudde/rabbitmq-exporter
+          imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 9090
               name: exporter
