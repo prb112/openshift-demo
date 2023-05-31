@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: user
-          image: weaveworksdemos/user:0.4.7
+          image: quay.io/cbade_cs/openshift-demo:user-0.4.7
           imagePullPolicy: IfNotPresent
           resources:
             limits:
@@ -29,8 +29,8 @@ spec:
               memory: 100Mi
           ports:
             - containerPort: 8080
-          command: [ "/user" ]
-          args: [ "-port=8080", "-mongo-host=user-db:27017" ]
+          command: [ "/opt/user" ]
+          args: [ "-port=8080" , "-mongo-host=user-db:27017" ]
           env:
             - name: mongo
               value: user-db:27017
@@ -38,17 +38,17 @@ spec:
               value: user
             - name: USER_DATABASE
               value: mongodb
-            - name: MONGO_HOST
-              value: mongodb
+              #- name: MONGO_HOST
+              #value: mongodb
           securityContext:
             runAsNonRoot: true
-            privileged: true
+            #privileged: true
           livenessProbe:
             httpGet:
               path: /health
               port: 8080
             initialDelaySeconds: 300
-            periodSeconds: 3
+            periodSeconds: 15
           readinessProbe:
             httpGet:
               path: /health

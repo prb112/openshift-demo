@@ -25,12 +25,13 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: mongodb-creds
-                  key: username
-            - name: MYSQL_DATABASE
-              valueFrom:
-                secretKeyRef:
-                  name: mongodb-creds
                   key: password
+            - name: MYSQL_DATABASE
+              value: socksdb
+              #valueFrom:
+              #secretKeyRef:
+              #   name: mongodb-creds
+              #   key: password
           ports:
             - name: mysql
               containerPort: 3306
