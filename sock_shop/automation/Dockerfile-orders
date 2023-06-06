@@ -1,16 +1,17 @@
-FROM maven:latest as builder
+FROM registry.access.redhat.com/ubi9/openjdk-11:latest as builder
 
 USER 0
 RUN mkdir -p /src/ && cd /src/ \
+    && microdnf install -y git \
     && git clone https://github.com/microservices-demo/orders
 
 # Decided to split the steps here to avoid rebuilding/cloning needlessly.
 
-RUN cd src/orders && mvn clean package -DskipTests && find . -iname '*.jar'
+RUN cd /src/orders && mvn clean package -DskipTests && find . -iname '*.jar'
 
 USER 1001
 
-FROM registry.access.redhat.com/ubi8/openjdk-11:latest
+FROM registry.access.redhat.com/ubi9/openjdk-11:latest
 
 ENV	SERVICE_USER=myuser \
 	SERVICE_UID=10001 \

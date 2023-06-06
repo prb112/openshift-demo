@@ -1,4 +1,4 @@
-FROM docker.io/library/mysql:8
+FROM docker.io/library/mariadb:latest
 
 # ENV MYSQL_ROOT_PASSWORD DEFAULT_PASS
 # ENV MYSQL_ALLOW_EMPTY_PASSWORD=true

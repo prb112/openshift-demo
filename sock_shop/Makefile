@@ -178,7 +178,6 @@ cross-build-linux-amd64: cross-build-user-linux-amd64 cross-build-front-end-linu
 
 # ppc64le
 
-
 cross-build-user-linux-ppc64le:
 	+@echo "Building Image - 'user'"
 	+@podman build --platform linux/ppc64le -t ${REGISTRY}:user-ppc64le -f automation/Dockerfile-user
@@ -211,7 +210,7 @@ cross-build-catalogue-linux-ppc64le:
 
 cross-build-catalogue-db-linux-ppc64le:
 	+@echo "Building Image - 'catalogue-db'"
-	+@podman build --platform linux/ppc64le -t ${REGISTRY}:catalogue-db-ppc64le -f automation/Dockerfile-catalogue-db
+	+@podman build --platform linux/ppc64le -t ${REGISTRY}:catalogue-db-ppc64le -f automation/Dockerfile-catalogue-db-ppc64le
 	+@echo "Done Image - 'catalogue-db'"
 .PHONY: cross-build-catalogue-db-linux-ppc64le
 
