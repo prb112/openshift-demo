@@ -14,7 +14,7 @@ RUN go install github.com/FiloSottile/gvt@latest \
     && go mod init github.com/microservices-demo/payment \
     && go mod tidy \
     && CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o /app github.com/microservices-demo/payment/cmd/paymentsvc \
-    && find / -name user -type f
+    && find / -name payment -type f
 USER 1001
 
 FROM registry.access.redhat.com/ubi9/ubi-minimal:latest
