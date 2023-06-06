@@ -1,4 +1,4 @@
-FROM registry.access.redhat.com/ubi8/go-toolset:1.18.10-1.1682304657 as builder
+FROM registry.access.redhat.com/ubi9/go-toolset:latest as builder
 ENV sourcesdir /go/src/github.com/microservices-demo/payment/
 
 USER 0
@@ -17,7 +17,7 @@ RUN go install github.com/FiloSottile/gvt@latest \
     && find / -name user -type f
 USER 1001
 
-FROM registry.access.redhat.com/ubi8/ubi-minimal:8.7-1107
+FROM registry.access.redhat.com/ubi9/ubi-minimal:latest
 
 ENV	SERVICE_USER=myuser \
 	SERVICE_UID=10001 \

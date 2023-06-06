@@ -1,4 +1,4 @@
-FROM maven:latest as builder
+FROM registry.access.redhat.com/ubi8/openjdk-11:latest
 
 USER 0
 RUN mkdir -p /src/ && cd /src/ \
@@ -10,7 +10,7 @@ RUN cd src/carts && mvn clean package -DskipTests && find . -iname '*.jar'
 
 USER 1001
 
-FROM registry.access.redhat.com/ubi8/openjdk-11:1.15-1.1682059493
+FROM registry.access.redhat.com/ubi9/openjdk-11-runtime:latest
 
 ENV	SERVICE_USER=myuser \
 	SERVICE_UID=10001 \

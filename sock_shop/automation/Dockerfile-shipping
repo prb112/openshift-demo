@@ -24,11 +24,11 @@ RUN microdnf update -y \
     && useradd -r -u ${SERVICE_UID} -g ${SERVICE_GROUP} -m -d /home/${SERVICE_USER} -s /sbin/nologin ${SERVICE_USER}
 
 WORKDIR /
-EXPOSE 80
+EXPOSE 8080
 
 COPY --from=builder /src/carts/target/*.jar ./app.jar
 RUN	chown -R ${SERVICE_USER}:${SERVICE_GROUP} ./app.jar
 
 USER ${SERVICE_USER}
 
-ENTRYPOINT ["java","-Djava.security.egd=file:/dev/urandom", "-jar","./app.jar", "--port=80"]
+ENTRYPOINT ["java","-Djava.security.egd=file:/dev/urandom", "-jar","./app.jar", "--port=8080"]
