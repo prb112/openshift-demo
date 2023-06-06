@@ -1,5 +1,10 @@
 REGISTRY=quay.io/pbastide_rh/openshift-demo
 
+cross-build-front-end-linux-amd64:
+	+@echo test
+	+@podman build --platform linux/amd64 -t ${REGISTRY}:user-amd64 -f automation/Dockerfile-front-end
+.PHONY: cross-build-front-end-linux-amd64
+
 cross-build-linux-arm64:
 	+@podman build --platform linux/arm64 -t ${REGISTRY}:user-arm64 -f automation/Dockerfile-user
 	+@podman build --platform linux/arm64 -t ${REGISTRY}:front-end-arm64 -f automation/Dockerfile-front-end
@@ -12,6 +17,10 @@ cross-build-linux-arm64:
 	+@podman build --platform linux/arm64 -t ${REGISTRY}:queue-master-arm64 -f automation/Dockerfile-queue-master
 
 .PHONY: cross-build-linux-arm64
+
+
+
+
 
 cross-build-linux-amd64:
 	+@podman build --platform linux/amd64 -t ${REGISTRY}:user-amd64 -f automation/Dockerfile-user
