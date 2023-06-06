@@ -15,7 +15,7 @@ RUN cd /go/src/github.com/microservices-demo/user && go mod init github.com/micr
     && go mod tidy && GOOS=linux go build . && find / -name user -type f
 USER 1001
 
-FROM registry.access.redhat.com/ubi8/ubi-minimal:8.7-1107
+FROM registry.access.redhat.com/ubi9/ubi-minimal:latest
 
 ENV     SERVICE_USER=myuser \
         SERVICE_UID=10001 \
@@ -30,7 +30,7 @@ RUN microdnf update -y \
 
 WORKDIR /opt
 EXPOSE 8080
-COPY --from=builder /user /opt/
+COPY --from=builder /go/src/github.com/microservices-demo/user/user /opt/
 
 RUN     chmod +x /opt/user && \
         chown -R ${SERVICE_USER}:${SERVICE_GROUP} /opt/user
