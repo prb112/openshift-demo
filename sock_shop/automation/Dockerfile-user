@@ -1,4 +1,19 @@
-FROM weaveworksdemos/user:0.4.7 as builder
+FROM registry.access.redhat.com/ubi8/go-toolset:1.18.10-1.1682304657 as builder
+ENV sourcesdir /go/src/github.com/microservices-demo/user/
+ENV MONGO_HOST mytestdb:27017
+ENV HATEAOS user
+ENV USER_DATABASE mongodb
+
+USER 0
+RUN mkdir -p /go/src/github.com/microservices-demo/ \
+    && cd /go/src/github.com/microservices-demo/ \
+    && git clone https://github.com/microservices-demo/user.git
+
+# Decided to split the steps here to avoid rebuilding/cloning needlessly.
+
+RUN cd /go/src/github.com/microservices-demo/user && go mod init github.com/microservices-demo/user \
+    && go mod tidy && GOOS=linux go build . && find / -name user -type f
+USER 1001
 
 FROM registry.access.redhat.com/ubi8/ubi-minimal:8.7-1107
 
