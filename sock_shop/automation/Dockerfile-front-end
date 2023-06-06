@@ -1,11 +1,11 @@
-FROM registry.access.redhat.com/ubi8/nodejs-16:1-98.1682303932 as builder
+FROM registry.access.redhat.com/ubi9/nodejs-18:1-48.1684739667 as builder
 USER 0
 RUN dnf update -y
 RUN mkdir -p /src/ \
     && cd /src/ \
     && git clone https://github.com/microservices-demo/front-end
 
-FROM registry.access.redhat.com/ubi8/nodejs-16:1-98.1682303932
+FROM registry.access.redhat.com/ubi9/nodejs-18:1-48.1684739667
 ENV NODE_ENV "production"
 ENV PORT 8079
 EXPOSE 8079
