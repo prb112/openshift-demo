@@ -20,7 +20,7 @@ ENV	SERVICE_USER=myuser \
 
 USER 0
 RUN microdnf update -y \
-    && microdnf install -y nc tzdata openssl curl ca-certificates fontconfig glibc-langpack-en gzip tar findutils shadow-utils \
+    && microdnf install -y nc tzdata openssl ca-certificates fontconfig glibc-langpack-en gzip tar findutils shadow-utils \
     && groupadd -r -g ${SERVICE_GID} ${SERVICE_GROUP} \
     && useradd -r -u ${SERVICE_UID} -g ${SERVICE_GROUP} -m -d /home/${SERVICE_USER} -s /sbin/nologin ${SERVICE_USER}
 
