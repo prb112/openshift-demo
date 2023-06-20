@@ -27,9 +27,10 @@ COPY --from=builder /src/front-end/package.json /usr/src/app/
 COPY --from=builder /src/front-end/yarn.lock /usr/src/app/
 
 RUN mkdir -p /opt/app-root/src/.npm \
+    && npm config set strict-ssl false \
     && npm install -g npm \
     && npm install -g yarn@1.22.19 \
-    && chown -R myuser:mygroup /opt/app-root/src/.npm \
+    && chown -R myuser:mygroup /opt/app-root/src/ \
     && chown -R myuser /usr/src/
 
 USER myuser

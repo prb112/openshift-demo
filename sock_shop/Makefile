@@ -1,62 +1,98 @@
-ARC=ppc64le   #amd64 s390x arm64 ppc64le
-REGISTRY=quay.io/cbade_cs/openshift-demo
+#Arches can be: amd64 s390x arm64 ppc64le
+ARCH ?= ppc64le
+
+# The app to build
+APP ?= phony
+
+# If absent, registry defaults
+REGISTRY ?= quay.io/cbade_cs/openshift-demo
+ARM_REGISTRY ?= ${REGISTRY}
 
 cross-build-user:
 	+@echo "Building Image - 'user'"
-	+@podman build --platform linux/${ARC} -t ${REGISTRY}:user-${ARC} -f automation/Dockerfile-user
+	+@podman build --platform linux/${ARCH} -t ${REGISTRY}:user-${ARCH} -f automation/Dockerfile-user
 	+@echo "Done Image - 'user'"
 .PHONY: cross-build-user
 
 cross-build-front-end:
 	+@echo "Building Image - 'front-end'"
-	+@podman build --platform linux/${ARC} -t ${REGISTRY}:front-end-${ARC} -f automation/Dockerfile-front-end
+	+@podman build --platform linux/${ARCH} -t ${REGISTRY}:front-end-${ARCH} -f automation/Dockerfile-front-end
 	+@echo "Done Image - 'front-end'"
 .PHONY: cross-build-front-end
 
 cross-build-payment:
 	+@echo "Building Image - 'payment'"
-	+@podman build --platform linux/${ARC} -t ${REGISTRY}:payment-${ARC} -f automation/Dockerfile-payment
+	+@podman build --platform linux/${ARCH} -t ${REGISTRY}:payment-${ARCH} -f automation/Dockerfile-payment
 	+@echo "Done Image - 'payment'"
 .PHONY: cross-build-payment
 
 cross-build-orders:
 	+@echo "Building Image - 'orders'"
-	+@podman build --platform linux/${ARC} -t ${REGISTRY}:orders-${ARC} -f automation/Dockerfile-orders
+	+@podman build --platform linux/${ARCH} -t ${REGISTRY}:orders-${ARCH} -f automation/Dockerfile-orders
 	+@echo "Done Image - 'orders'"
 .PHONY: cross-build-orders
 
 cross-build-catalogue:
 	+@echo "Building Image - 'catalogue'"
-	+@podman build --platform linux/${ARC} -t ${REGISTRY}:catalogue-${ARC} -f automation/Dockerfile-catalogue
+	+@podman build --platform linux/${ARCH} -t ${REGISTRY}:catalogue-${ARCH} -f automation/Dockerfile-catalogue
 	+@echo "Done Image - 'catalogue'"
 .PHONY: cross-build-catalogue
 
 cross-build-catalogue-db:
 	+@echo "Building Image - 'catalogue-db'"
-	+@podman build --platform linux/${ARC} -t ${REGISTRY}:catalogue-db-${ARC} -f automation/Dockerfile-catalogue-db
+	+@podman build --platform linux/${ARCH} -t ${REGISTRY}:catalogue-db-${ARCH} -f automation/Dockerfile-catalogue-db
 	+@echo "Done Image - 'catalogue-db'"
 .PHONY: cross-build-catalogue-db
 
 cross-build-carts:
 	+@echo "Building Image - 'carts'"
-	+@podman build --platform linux/${ARC} -t ${REGISTRY}:carts-${ARC} -f automation/Dockerfile-carts
+	+@podman build --platform linux/${ARCH} -t ${REGISTRY}:carts-${ARCH} -f automation/Dockerfile-carts
 	+@echo "Done Image - 'carts'"
 .PHONY: cross-build-carts
 
 cross-build-shipping:
 	+@echo "Building Image - 'shipping'"
-	+@podman build --platform linux/${ARC} -t ${REGISTRY}:shipping-${ARC} -f automation/Dockerfile-shipping
+	+@podman build --platform linux/${ARCH} -t ${REGISTRY}:shipping-${ARCH} -f automation/Dockerfile-shipping
 	+@echo "Done Image - 'shipping'"
 .PHONY: cross-build-shipping
 
 cross-build-queue-master:
 	+@echo "Building Image - 'queue-master'"
-	+@podman build --platform linux/${ARC} -t ${REGISTRY}:queue-master-${ARC} -f automation/Dockerfile-queue-master
+	+@podman build --platform linux/${ARCH} -t ${REGISTRY}:queue-master-${ARCH} -f automation/Dockerfile-queue-master
 	+@echo "Done Image - 'queue-master'"
 .PHONY: cross-build-queue-master
 
+cross-build-amd64: cross-build-user cross-build-front-end cross-build-payment cross-build-orders cross-build-catalogue cross-build-catalogue-db cross-build-carts cross-build-shipping cross-build-queue-master
+.PHONY: cross-build-amd64 
 
-cross-build-all: cross-build-user cross-build-front-end cross-build-payment cross-build-orders cross-build-catalogue cross-build-catalogue-db cross-build-carts cross-build-shipping cross-build-queue-master
+# cross-build-catalogue-db is not supported on non-amd64 arches
+cross-build-other: cross-build-user cross-build-front-end cross-build-payment cross-build-orders cross-build-catalogue cross-build-carts cross-build-shipping cross-build-queue-master
+.PHONY: cross-build-other
 
-.PHONY: cross-build-all
+# pushes the individual images
+push-all-ind:
+	+@podman push ${REGISTRY}:carts-${ARCH}
+	+@podman push ${REGISTRY}:catalogue-${ARCH}
+	+@podman push ${REGISTRY}:front-end-${ARCH}
+	+@podman push ${REGISTRY}:orders-${ARCH}
+	+@podman push ${REGISTRY}:payment-${ARCH}
+	+@podman push ${REGISTRY}:queue-master-${ARCH}
+	+@podman push ${REGISTRY}:user-${ARCH}
+	+@podman push ${REGISTRY}:shipping-${ARCH}
+.PHONY: push-all-ind
 
+# pushes the catalogue-db image
+push-catalogue-db:
+	+@podman push ${REGISTRY}:catalogue-db
+.PHONY: push-catalogue-db
+
+# Applies to all (except catalogue-db) - generate-and-push-manifest-list.
+push-ml:
+	+@podman manifest rm ${REGISTRY}:${APP}
+	+@podman manifest create ${REGISTRY}:${APP} \
+		${REGISTRY}:${APP}-amd64 \
+		${REGISTRY}:${APP}-s390x \
+		${ARM_REGISTRY}:${APP}-arm64 \
+		${REGISTRY}:${APP}-ppc64le
+	+@podman manifest push ${REGISTRY}:${APP} ${REGISTRY}:${APP}
+.PHONY: push-ml
