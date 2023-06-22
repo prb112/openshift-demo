@@ -86,13 +86,23 @@ push-catalogue-db:
 	+@podman push ${REGISTRY}:catalogue-db
 .PHONY: push-catalogue-db
 
+pull-deps:
+	+@podman pull --platform linux/amd64 ${REGISTRY}:${APP}-amd64
+	+@podman pull --platform linux/s390x ${REGISTRY}:${APP}-s390x
+	+@podman pull --platform linux/arm64 ${REGISTRY}:${APP}-arm64
+	+@podman pull --platform linux/ppc64le ${REGISTRY}:${APP}-ppc64le
+.PHONY: pull-deps
+
 # Applies to all (except catalogue-db) - generate-and-push-manifest-list.
-push-ml:
-	+@podman manifest rm ${REGISTRY}:${APP}
-	+@podman manifest create ${REGISTRY}:${APP} \
+push-ml: pull-deps
+	+@echo "Remove existing manifest listed - ${APP}"
+	+@podman manifest rm ${REGISTRY}:sock-shop-${APP}
+	+@echo "Create new ML - ${APP}"
+	+@podman manifest create ${REGISTRY}:sock-shop-${APP} \
 		${REGISTRY}:${APP}-amd64 \
 		${REGISTRY}:${APP}-s390x \
 		${ARM_REGISTRY}:${APP}-arm64 \
 		${REGISTRY}:${APP}-ppc64le
-	+@podman manifest push ${REGISTRY}:${APP} ${REGISTRY}:${APP}
+	+@echo "Pushing image - ${APP}"
+	+@podman manifest push ${REGISTRY}:sock-shop-${APP} ${REGISTRY}:sock-shop-${APP}
 .PHONY: push-ml
