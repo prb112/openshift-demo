@@ -101,7 +101,7 @@ pull-deps:
 # Applies to all (except catalogue-db) - generate-and-push-manifest-list.
 push-ml: verify-environment pull-deps
 	+@echo "Remove existing manifest listed - ${APP}"
-	+@podman manifest rm ${REGISTRY}:sock-shop-${APP}
+	+@podman manifest rm ${REGISTRY}:sock-shop-${APP} || true
 	+@echo "Create new ML - ${APP}"
 	+@podman manifest create ${REGISTRY}:sock-shop-${APP} \
 		${REGISTRY}:${APP}-amd64 \
