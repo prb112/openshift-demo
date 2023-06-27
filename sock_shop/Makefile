@@ -8,6 +8,11 @@ APP ?= phony
 REGISTRY ?= quay.io/cbade_cs/openshift-demo
 ARM_REGISTRY ?= ${REGISTRY}
 
+verify-environment:
+	+@echo "REGISTRY: ${REGISTRY}"
+	+@echo "ARM_REGISTRY: ${ARM_REGISTRY}"
+.PHONY: verify-environment
+
 cross-build-user:
 	+@echo "Building Image - 'user'"
 	+@podman build --platform linux/${ARCH} -t ${REGISTRY}:user-${ARCH} -f automation/Dockerfile-user
@@ -94,7 +99,7 @@ pull-deps:
 .PHONY: pull-deps
 
 # Applies to all (except catalogue-db) - generate-and-push-manifest-list.
-push-ml: pull-deps
+push-ml: verify-environment pull-deps
 	+@echo "Remove existing manifest listed - ${APP}"
 	+@podman manifest rm ${REGISTRY}:sock-shop-${APP}
 	+@echo "Create new ML - ${APP}"
