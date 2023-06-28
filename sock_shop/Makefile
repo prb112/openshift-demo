@@ -94,7 +94,7 @@ push-catalogue-db:
 pull-deps:
 	+@podman pull --platform linux/amd64 ${REGISTRY}:${APP}-amd64
 	+@podman pull --platform linux/s390x ${REGISTRY}:${APP}-s390x
-	+@podman pull --platform linux/arm64 ${REGISTRY}:${APP}-arm64
+	+@podman pull --platform linux/arm64 ${ARM_REGISTRY}:${APP}-arm64
 	+@podman pull --platform linux/ppc64le ${REGISTRY}:${APP}-ppc64le
 .PHONY: pull-deps
 
