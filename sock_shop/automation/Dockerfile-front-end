@@ -39,4 +39,4 @@ RUN yarn install
 COPY --from=builder /src/front-end/ /usr/src/app
 
 # Start the app
-CMD ["/usr/local/bin/npm", "start"]
+CMD ["/usr/bin/npm", "start"]
