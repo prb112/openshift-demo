@@ -22,7 +22,7 @@ spec:
           imagePullPolicy: IfNotPresent
           command: [ "/opt/app" ]
           args:
-            - -port=80
+            - -port=8080
             - -DSN=root:admin@tcp(catalogue-db:3306)/socksdb
           resources:
             limits:

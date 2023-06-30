@@ -21,7 +21,7 @@ spec:
           image: quay.io/cbade_cs/openshift-demo:sock-shop-shipping
           imagePullPolicy: IfNotPresent
           command: [ "/usr/bin/java" ]
-          args: [ "-jar", "./app.jar", "--port=8080" ]
+          args: [ "-jar", "/opt/app.jar", "--port=8080" ]
           env:
             - name: ZIPKIN
               value: zipkin.jaeger.svc.cluster.local

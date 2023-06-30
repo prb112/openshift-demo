@@ -21,7 +21,7 @@ spec:
           image: quay.io/cbade_cs/openshift-demo:sock-shop-queue-master
           imagePullPolicy: IfNotPresent
           command: [ "/usr/bin/java" ]
-          args: [ "-jar", "./app.jar", "--port=8080" ]
+          args: [ "-jar", "/opt/app.jar", "--port=8080" ]
           env:
             - name: JAVA_OPTS
               value: -Xms64m -Xmx128m -XX:+UseG1GC -Djava.security.egd=file:/dev/urandom -Dspring.zipkin.enabled=false
