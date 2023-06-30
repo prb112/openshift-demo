@@ -18,9 +18,9 @@ spec:
     spec:
       containers:
         - name: shipping
-          image: weaveworksdemos/shipping:0.4.8
+          image: quay.io/cbade_cs/openshift-demo:sock-shop-shipping
           imagePullPolicy: IfNotPresent
-          command: [ "/usr/local/bin/java.sh" ]
+          command: [ "/usr/bin/java" ]
           args: [ "-jar", "./app.jar", "--port=8080" ]
           env:
             - name: ZIPKIN

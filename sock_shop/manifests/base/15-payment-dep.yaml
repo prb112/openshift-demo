@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: payment
-          image: weaveworksdemos/payment:0.4.3
+          image: quay.io/cbade_cs/openshift-demo:sock-shop-payment
           imagePullPolicy: IfNotPresent
           command: [ "/app" ]
           args: [ "-port=8080" ]

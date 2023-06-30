@@ -18,9 +18,9 @@ spec:
     spec:
       containers:
         - name: queue-master
-          image: weaveworksdemos/queue-master:0.3.1
+          image: quay.io/cbade_cs/openshift-demo:sock-shop-queue-master
           imagePullPolicy: IfNotPresent
-          command: [ "/usr/local/bin/java.sh" ]
+          command: [ "/usr/bin/java" ]
           args: [ "-jar", "./app.jar", "--port=8080" ]
           env:
             - name: JAVA_OPTS

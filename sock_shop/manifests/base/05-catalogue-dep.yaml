@@ -18,9 +18,9 @@ spec:
     spec:
       containers:
         - name: catalogue
-          image: weaveworksdemos/catalogue:0.3.5
+          image: quay.io/cbade_cs/openshift-demo
           imagePullPolicy: IfNotPresent
-          command: [ "/app" ]
+          command: [ "/opt/app" ]
           args:
             - -port=80
             - -DSN=root:admin@tcp(catalogue-db:3306)/socksdb

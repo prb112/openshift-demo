@@ -18,9 +18,9 @@ spec:
     spec:
       containers:
         - name: orders
-          image: weaveworksdemos/orders:0.4.7
+          image: quay.io/cbade_cs/openshift-demo:sock-shop-orders
           imagePullPolicy: IfNotPresent
-          command: [ "/usr/local/bin/java.sh" ]
+          command: [ "/usr/bin/java" ]
           args: [ "-jar", "./app.jar", "--port=8080" ]
           env:
             - name: JAVA_OPTS
