@@ -34,8 +34,8 @@ RUN	chown -R ${SERVICE_USER}:${SERVICE_GROUP} /opt/app.jar
 
 # Override a jaxb error as it's not included in JDK 11
 RUN mkdir -p /opt/lib \
-    && curl -L -o /tmp/jaxb-api-2.3.1.jar https://repo1.maven.org/maven2/javax/xml/bind/jaxb-api/2.3.1/jaxb-api-2.3.1.jar
-    && curl -L -o /tmp/jaxb-runtime-3.0.1.redhat-00001.jar https://maven.repository.redhat.com/ga/org/glassfish/jaxb/jaxb-runtime/3.0.1.redhat-00001/jaxb-runtime-3.0.1.redhat-00001.jar
+    && curl -L -o /tmp/jaxb-api-2.3.1.jar https://repo1.maven.org/maven2/javax/xml/bind/jaxb-api/2.3.1/jaxb-api-2.3.1.jar \
+    && curl -L -o /tmp/jaxb-runtime-3.0.1.redhat-00001.jar https://maven.repository.redhat.com/ga/org/glassfish/jaxb/jaxb-runtime/3.0.1.redhat-00001/jaxb-runtime-3.0.1.redhat-00001.jar \
     && chmod 755 /opt/lib/*.jar
 
 USER ${SERVICE_USER}
