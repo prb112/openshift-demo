@@ -10,58 +10,59 @@ ARM_REGISTRY ?= ${REGISTRY}
 
 verify-environment:
 	+@echo "REGISTRY: ${REGISTRY}"
+	+@echo "ARCH: ${ARCH}"
 	+@echo "ARM_REGISTRY: ${ARM_REGISTRY}"
 .PHONY: verify-environment
 
-cross-build-user:
+cross-build-user: verify-environment
 	+@echo "Building Image - 'user'"
 	+@podman build --platform linux/${ARCH} -t ${REGISTRY}:user-${ARCH} -f automation/Dockerfile-user
 	+@echo "Done Image - 'user'"
 .PHONY: cross-build-user
 
-cross-build-front-end:
+cross-build-front-end: verify-environment
 	+@echo "Building Image - 'front-end'"
 	+@podman build --platform linux/${ARCH} -t ${REGISTRY}:front-end-${ARCH} -f automation/Dockerfile-front-end
 	+@echo "Done Image - 'front-end'"
 .PHONY: cross-build-front-end
 
-cross-build-payment:
+cross-build-payment: verify-environment
 	+@echo "Building Image - 'payment'"
 	+@podman build --platform linux/${ARCH} -t ${REGISTRY}:payment-${ARCH} -f automation/Dockerfile-payment
 	+@echo "Done Image - 'payment'"
 .PHONY: cross-build-payment
 
-cross-build-orders:
+cross-build-orders: verify-environment
 	+@echo "Building Image - 'orders'"
 	+@podman build --platform linux/${ARCH} -t ${REGISTRY}:orders-${ARCH} -f automation/Dockerfile-orders
 	+@echo "Done Image - 'orders'"
 .PHONY: cross-build-orders
 
-cross-build-catalogue:
+cross-build-catalogue: verify-environment
 	+@echo "Building Image - 'catalogue'"
 	+@podman build --platform linux/${ARCH} -t ${REGISTRY}:catalogue-${ARCH} -f automation/Dockerfile-catalogue
 	+@echo "Done Image - 'catalogue'"
 .PHONY: cross-build-catalogue
 
-cross-build-catalogue-db:
+cross-build-catalogue-db: verify-environment
 	+@echo "Building Image - 'catalogue-db'"
 	+@podman build --platform linux/${ARCH} -t ${REGISTRY}:catalogue-db-${ARCH} -f automation/Dockerfile-catalogue-db
 	+@echo "Done Image - 'catalogue-db'"
 .PHONY: cross-build-catalogue-db
 
-cross-build-carts:
+cross-build-carts: verify-environment
 	+@echo "Building Image - 'carts'"
 	+@podman build --platform linux/${ARCH} -t ${REGISTRY}:carts-${ARCH} -f automation/Dockerfile-carts
 	+@echo "Done Image - 'carts'"
 .PHONY: cross-build-carts
 
-cross-build-shipping:
+cross-build-shipping: verify-environment
 	+@echo "Building Image - 'shipping'"
 	+@podman build --platform linux/${ARCH} -t ${REGISTRY}:shipping-${ARCH} -f automation/Dockerfile-shipping
 	+@echo "Done Image - 'shipping'"
 .PHONY: cross-build-shipping
 
-cross-build-queue-master:
+cross-build-queue-master: verify-environment
 	+@echo "Building Image - 'queue-master'"
 	+@podman build --platform linux/${ARCH} -t ${REGISTRY}:queue-master-${ARCH} -f automation/Dockerfile-queue-master
 	+@echo "Done Image - 'queue-master'"
@@ -75,7 +76,7 @@ cross-build-other: cross-build-user cross-build-front-end cross-build-payment cr
 .PHONY: cross-build-other
 
 # pushes the individual images
-push-all-ind:
+push-all-ind: verify-environment
 	+@podman push ${REGISTRY}:carts-${ARCH}
 	+@podman push ${REGISTRY}:catalogue-${ARCH}
 	+@podman push ${REGISTRY}:front-end-${ARCH}
@@ -87,7 +88,7 @@ push-all-ind:
 .PHONY: push-all-ind
 
 # pushes the catalogue-db image
-push-catalogue-db:
+push-catalogue-db: verify-environment
 	+@podman push ${REGISTRY}:catalogue-db
 .PHONY: push-catalogue-db
 
