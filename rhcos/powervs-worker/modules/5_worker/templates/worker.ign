@@ -23,10 +23,10 @@
             },
             {
                 "group": {},
-                "path": "/etc/sysconfig/network-scripts/route-env2",
+                "path": "/etc/NetworkManager/system-connections/env2.nmconnection",
                 "user": {},
                 "contents": {
-                    "source": "data:text/plain;base64,MTAuMTAuMTAuMC8yNCB2aWEgMTkyLjE2OC4yMDAuMQoxMC4yNDguMS4wLzI0IHZpYSAxOTIuMTY4LjIwMC4xCjEwLjI0OC4wLjAvMjQgdmlhIDE5Mi4xNjguMjAwLjEKMTAuMjQ4LjY0LjAvMjQgdmlhIDE5Mi4xNjguMjAwLjEKMTAuMjQ4LjY1LjAvMjQgdmlhIDE5Mi4xNjguMjAwLjEKMTAuMjQ4LjEyOS4wLzI0IHZpYSAxOTIuMTY4LjIwMC4xCjEwLjI0OC4xMjguMC8yNCB2aWEgMTkyLjE2OC4yMDAuMQo=",
+                    "source": "data:text/plain;base64,W2lwdjRdCm1ldGhvZD1hdXRvCnJvdXRlMT0xMC4xMC4xMC4wLzI0LDE5Mi4xNjguMjAwLjEsMQpyb3V0ZTI9MTAuMjQ4LjEuMC8yNCwxOTIuMTY4LjIwMC4xLDEKcm91dGUzPTEwLjI0OC4wLjAvMjQsMTkyLjE2OC4yMDAuMSwxCnJvdXRlND0xMC4yNDguNjQuMC8yNCwxOTIuMTY4LjIwMC4xLDEKcm91dGU1PTEwLjI0OC42NS4wLzI0LDE5Mi4xNjguMjAwLjEsMQpyb3V0ZTY9MTAuMjQ4LjEyOS4wLzI0LDE5Mi4xNjguMjAwLjEsMQpyb3V0ZTc9MTAuMjQ4LjEyOC4wLzI0LDE5Mi4xNjguMjAwLjEsMQoKW2V0aHRvb2xdCmZlYXR1cmUtdHgtY2hlY2tzdW0tZmNvZS1jcmM9b2ZmCmV0aHRvb2wuZmVhdHVyZS10eC1jaGVja3N1bS1pcC1nZW5lcmljPW9mZgpldGh0b29sLmZlYXR1cmUtdHgtY2hlY2tzdW0taXB2ND1vZmYKZXRodG9vbC5mZWF0dXJlLXR4LWNoZWNrc3VtLWlwdjY9b2ZmCmV0aHRvb2wuZmVhdHVyZS10eC1jaGVja3N1bS1zY3RwPW9mZgo=",
                     "verification": {}
                 },
                 "mode": 420
