@@ -1,14 +1,24 @@
 FROM registry.access.redhat.com/ubi9/openjdk-11:latest as builder
 
 USER 0
-RUN microdnf install -y git \
-    && mkdir -p /src/ \
-    && cd /src/ \
-    && git clone https://github.com/microservices-demo/carts
+
+# Original code pulled in a transitive dependency that made it very hard to use sprint-boot.
+
+#RUN microdnf install -y git \
+#    && mkdir -p /src/ \
+#    && cd /src/ \
+#    && git clone https://github.com/microservices-demo/carts
 
 # Decided to split the steps here to avoid rebuilding/cloning needlessly.
+#RUN cd /src/carts && mvn clean package -DskipTests
 
-RUN cd /src/carts && mvn clean package -DskipTests
+# Workaround: To update the code and pull out the jar we're using crane to grab the existing jar
+
+RUN curl -o o.tgz https://github.com/google/go-containerregistry/releases/download/v0.15.2/go-containerregistry_Linux_$(arch).tar.gz -L \
+    && tar xvf o.tgz \
+    && ./crane export weaveworksdemos/carts:0.4.8 x.tar \
+    && tar xvf x.tar usr/src/app/app.jar \
+    && mv usr/src/app/app.jar app.jar
 
 USER 1001
 
@@ -29,7 +39,7 @@ WORKDIR /
 EXPOSE 8080
 
 RUN mkdir -p /opt
-COPY --from=builder /src/carts/target/*.jar /opt/app.jar
+COPY --from=builder /src/app.jar /opt/app.jar
 RUN	chown -R ${SERVICE_USER}:${SERVICE_GROUP} /opt/app.jar
 
 # Override a jaxb error as it's not included in JDK 11
