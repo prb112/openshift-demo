@@ -38,4 +38,4 @@ RUN mkdir -p /opt/lib \
 
 USER ${SERVICE_USER}
 
-ENTRYPOINT ["/usr/bin/java","-jar","./app.jar", "--port=8080"]
+ENTRYPOINT ["/usr/bin/java","-jar","/app.jar", "--port=8080"]
