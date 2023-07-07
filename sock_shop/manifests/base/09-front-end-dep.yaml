@@ -18,6 +18,8 @@ spec:
         - name: front-end
           image: quay.io/cbade_cs/openshift-demo:sock-shop-front-end
           imagePullPolicy: IfNotPresent
+          command: [ "/usr/bin/npm" ]
+          args: [ "start" ]
           resources:
             limits:
               cpu: 300m
