@@ -15,7 +15,7 @@ USER 0
 # Workaround: To update the code and pull out the jar we're using crane to grab the existing jar
 
 RUN microdnf install -y tar gzip \
-    && curl -o o.tgz https://github.com/google/go-containerregistry/releases/download/v0.15.2/go-containerregistry_Linux_$(arch | sed 's|x86_64|amd64|g' | sed 's|aarch64|arm64|g').tar.gz -L \
+    && curl -L -o o.tgz "https://github.com/google/go-containerregistry/releases/download/v0.15.2/go-containerregistry_Linux_$(arch | sed 's|aarch64|arm64|g').tar.gz" \
     && tar xvf o.tgz \
     && ./crane export weaveworksdemos/carts:0.4.8 x.tar \
     && tar xvf x.tar usr/src/app/app.jar \
