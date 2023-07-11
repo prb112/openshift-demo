@@ -1,9 +1,12 @@
 FROM registry.access.redhat.com/ubi9/nodejs-18:latest as builder
 USER 0
 RUN dnf update -y
+
+# Original was https://github.com/microservices-demo/front-end
+
 RUN mkdir -p /src/ \
     && cd /src/ \
-    && git clone https://github.com/microservices-demo/front-end
+    && git clone https://github.com/prb112/sock-shop-front-end
 
 FROM registry.access.redhat.com/ubi9/nodejs-18:latest
 ENV NODE_ENV "production"
