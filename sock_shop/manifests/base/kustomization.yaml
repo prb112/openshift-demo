@@ -48,4 +48,4 @@ secretGenerator:
   - name: mongodb-creds
     namespace: sock-shop
     envs:
-      - .env.secret
+      - env.secret
