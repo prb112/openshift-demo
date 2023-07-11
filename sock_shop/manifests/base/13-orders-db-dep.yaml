@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: orders-db
-          image: mongo
+          image: mongo:4
           imagePullPolicy: IfNotPresent
           ports:
             - name: mongo

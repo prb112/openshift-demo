@@ -36,7 +36,6 @@ spec:
             - containerPort: 8080
           securityContext:
             runAsNonRoot: true
-            #runAsUser: 10001
             capabilities:
               drop:
                 - all

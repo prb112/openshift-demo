@@ -15,6 +15,7 @@ RUN mkdir -p /go/src/github.com/microservices-demo/ \
 
 RUN cd /go/src/github.com/microservices-demo/catalogue \
     && CGO_ENABLED=0 GOOS=linux go build -mod=readonly -a -installsuffix cgo -o /app github.com/microservices-demo/catalogue/cmd/cataloguesvc
+
 USER 1001
 
 FROM registry.access.redhat.com/ubi9/ubi-minimal:latest
@@ -39,10 +40,11 @@ EXPOSE 8080
 RUN mkdir -p /opt/
 
 COPY --from=builder /app /opt/app
-COPY --from=builder /go/src/github.com/microservices-demo/catalogue/images/ /opt/images/
+COPY --from=builder /go/src/github.com/microservices-demo/catalogue/images/ /images/
 
-RUN	chmod +x /opt/app && \
-	chown -R ${SERVICE_USER}:${SERVICE_GROUP} /opt/app /opt/images
+RUN	chmod +x /opt/app \
+	&& chmod +rx /images \
+	&& chown -R ${SERVICE_USER}:${SERVICE_GROUP} /opt/app /images
 
 USER ${SERVICE_USER}
 
