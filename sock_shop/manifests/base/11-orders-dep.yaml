@@ -21,10 +21,7 @@ spec:
           image: quay.io/cbade_cs/openshift-demo:sock-shop-orders
           imagePullPolicy: IfNotPresent
           command: [ "/usr/bin/java" ]
-          args: [ "-cp", "/app.jar", "-Dloader.path=/opt/lib", "org.springframework.boot.loader.PropertiesLauncher", "--port=8080" ]
-          env:
-            - name: JAVA_OPTS
-              value: -Xms64m -Xmx128m -XX:+UseG1GC -Djava.security.egd=file:/dev/urandom -Dspring.zipkin.enabled=false
+          args: [ "-cp", "/app.jar", "-Xms64m", "-Xmx128m", "-XX:+UseG1GC", "-Djava.security.egd=file:/dev/urandom", "-Dspring.zipkin.enabled=false", "-Dloader.path=/opt/lib", "org.springframework.boot.loader.PropertiesLauncher", "--port=8080" ]
           resources:
             limits:
               cpu: 500m
@@ -39,8 +36,6 @@ spec:
             capabilities:
               drop:
                 - all
-              add:
-                - NET_BIND_SERVICE
             readOnlyRootFilesystem: true
           volumeMounts:
             - mountPath: /tmp

@@ -42,13 +42,13 @@ spec:
             httpGet:
               path: /
               port: 8079
-            initialDelaySeconds: 300
+            initialDelaySeconds: 5
             periodSeconds: 3
           readinessProbe:
             httpGet:
               path: /
               port: 8079
-            initialDelaySeconds: 30
+            initialDelaySeconds: 5
             periodSeconds: 3
       nodeSelector:
         node.openshift.io/os_id: rhcos
