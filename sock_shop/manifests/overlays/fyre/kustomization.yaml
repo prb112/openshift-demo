@@ -11,7 +11,7 @@ sortOptions:
   order: fifo
 
 resources:
-  - ../../base/00-sock-shop-ns.yaml
+  - 00-sock-shop-ns.yaml
   - 01-carts-dep.yaml
   - 02-carts-svc.yaml
   - 03-carts-db-temp-pvc.yaml
@@ -43,7 +43,7 @@ resources:
   - 27-user-db-temp-pvc.yaml
   - 27-user-db-dep.yaml
   - 28-user-db-svc.yaml
-  -  ../../base/29-route-front-end.yaml
+  - 29-route-front-end.yaml
 secretGenerator:
   - name: mongodb-creds
     namespace: sock-shop

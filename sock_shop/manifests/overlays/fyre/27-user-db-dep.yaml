@@ -33,8 +33,8 @@ spec:
         - name: users-db-vol
           emptyDir:
             medium: Memory
-              #        - name: users-db-temp-vol
-              #persistentVolumeClaim:
-              #claimName: user-db-temp-pvc
+        - name: users-db-temp-vol
+          emptyDir:
+            medium: Memory
       nodeSelector:
         node.openshift.io/os_id: rhcos
