@@ -30,9 +30,9 @@ spec:
             - mountPath: /data/db
               name: carts-db-vol
       volumes:
-        #        - name: carts-db-temp-vol
-        #  persistentVolumeClaim:
-        #    claimName: carts-db-temp-pvc
+        - name: carts-db-temp-vol
+          emptyDir:
+            medium: Memory
         - name: carts-db-vol
           emptyDir:
             medium: Memory
