@@ -19,7 +19,7 @@ spec:
       containers:
         - name: payment
           image: quay.io/cbade_cs/openshift-demo:sock-shop-payment
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           command: [ "/payment/app" ]
           args: [ "-port=8080" ]
           resources:

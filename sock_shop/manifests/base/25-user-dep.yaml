@@ -19,7 +19,7 @@ spec:
       containers:
         - name: user
           image: quay.io/cbade_cs/openshift-demo:sock-shop-user
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           resources:
             limits:
               cpu: 300m
