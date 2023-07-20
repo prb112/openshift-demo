@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: user-db
-          image: weaveworksdemos/user-db:0.4.7
+          image: quay.io/cbade_cs/openshift-demo:sock-shop-user-db
           imagePullPolicy: IfNotPresent
           ports:
             - name: mongo
