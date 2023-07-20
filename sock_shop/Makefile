@@ -20,6 +20,12 @@ cross-build-user: verify-environment
 	+@echo "Done Image - 'user'"
 .PHONY: cross-build-user
 
+cross-build-user-db: verify-environment
+	+@echo "Building Image - 'user-db'"
+	+@podman build --platform linux/${ARCH} -t ${REGISTRY}:user-db-${ARCH} -f automation/Dockerfile-user-db
+	+@echo "Done Image - 'user-db'"
+.PHONY: cross-build-user-db
+
 cross-build-front-end: verify-environment
 	+@echo "Building Image - 'front-end'"
 	+@podman build --platform linux/${ARCH} -t ${REGISTRY}:front-end-${ARCH} -f automation/Dockerfile-front-end
