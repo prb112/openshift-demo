@@ -19,7 +19,7 @@ spec:
       containers:
         - name: catalogue-db
           image: quay.io/cbade_cs/openshift-demo:sock-shop-catalogue-db
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           env:
             - name: MARIADB_ROOT_PASSWORD
               valueFrom:

@@ -37,12 +37,9 @@ spec:
             - name: HATEAOS
               value: user
             - name: USER_DATABASE
-              value: mongodb
-              #- name: MONGO_HOST
-              #value: mongodb
+              value: users
           securityContext:
             runAsNonRoot: true
-            #privileged: true
           livenessProbe:
             httpGet:
               path: /health

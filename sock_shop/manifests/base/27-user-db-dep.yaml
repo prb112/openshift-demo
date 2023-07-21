@@ -18,7 +18,7 @@ spec:
       containers:
         - name: user-db
           image: quay.io/cbade_cs/openshift-demo:sock-shop-user-db
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           ports:
             - name: mongo
               containerPort: 27017

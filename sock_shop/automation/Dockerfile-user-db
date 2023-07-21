@@ -11,7 +11,7 @@ RUN mkdir -p /go/src/github.com/microservices-demo/ \
 
 FROM mongo:3
 RUN mkdir -p /scripts/
-COPY --from=builder /go/src/github.com/microservices-demo/user/docker/user-db/scripts /scripts/
+COPY --from=builder /go/src/github.com/microservices-demo/user/docker/user-db/scripts /docker-entrypoint-initdb.d/
 
 # Modify child mongo to use /data/db-accounts as dbpath (because /data/db wont persist the build because it is already a VOLUME)
 RUN mkdir -p /data/db-users \
@@ -21,10 +21,10 @@ RUN mkdir -p /data/db-users \
     && chown -R mongodb:mongodb /logs
 
 USER mongodb
-RUN mongod --fork --logpath /logs/mongodb.log --dbpath /data/db-users  \
-    && /scripts/mongo_create_insert.sh \
-    && mongod --dbpath /data/db-users --shutdown \
-    && chown -R mongodb /data/db-users
+#RUN mongod --fork --logpath /logs/mongodb.log --dbpath /data/db-users  \
+#    && /scripts/mongo_create_insert.sh \
+#    && mongod --dbpath /data/db-users --shutdown \
+#    && chown -R mongodb /data/db-users
 
 # Make the new dir a VOLUME to persist it
 VOLUME /data/db-users
