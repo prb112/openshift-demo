@@ -4,5 +4,6 @@
 
 for FILE in $(find /docker-entrypoint-initdb.d/ -type f -iname '*.js')
 do
-printf '%s' "db = db.getSiblingDB('users');\n" | cat - ${FILE} > tmpfile && mv -f tmpfile ${FILE}
+printf '%s' "db = db.getSiblingDB('users');
+" | cat - ${FILE} > tmpfile && mv -f tmpfile ${FILE}
 done
