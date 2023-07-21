@@ -19,7 +19,7 @@ RUN mkdir -p /data/db-users \
     && echo "dbpath = /data/db-users" > /etc/mongodb.conf \
     && chown -R mongodb:mongodb /data/db-users \
     && mkdir -p /logs \
-    && chown -R mongodb:mongodb /logs ]
+    && chown -R mongodb:mongodb /logs \
     && rm -f /docker-entrypoint-initdb.d/mongo_create_insert.sh
 
 USER mongodb
