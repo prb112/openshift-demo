@@ -97,22 +97,17 @@ push-catalogue-db: verify-environment
 	+@echo "push Image - 'catalogue-db'"
 	+@podman push ${REGISTRY}:catalogue-db-${ARCH}
 	+@echo "Done push Image - 'catalogue-db'"
-.PHONY: cross-build-catalogue-db
+.PHONY: push-catalogue-db
 
 push-user-db: verify-environment
 	+@echo "push Image - 'user-db'"
 	+@podman push ${REGISTRY}:user-db-${ARCH}
 	+@echo "Done Image - 'user-db'"
-.PHONY: cross-build-user-db
+.PHONY: push-user-db
 
 # These images are build separately and only target amd64
 push-db: verify-environment push-catalogue-db push-user-db
 .PHONY: push-db
-
-# pushes the catalogue-db image
-push-catalogue-db: verify-environment
-	+@podman push ${REGISTRY}:catalogue-db
-.PHONY: push-catalogue-db
 
 pull-deps:
 	+@podman pull --platform linux/amd64 ${REGISTRY}:${APP}-amd64
