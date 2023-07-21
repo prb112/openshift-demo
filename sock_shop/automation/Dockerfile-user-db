@@ -12,8 +12,6 @@ RUN mkdir -p /go/src/github.com/microservices-demo/ \
 FROM docker.io/library/mongo:3
 COPY --from=builder /go/src/github.com/microservices-demo/user/docker/user-db/scripts /docker-entrypoint-initdb.d/
 
-COPY files/user-db-init.sh /docker-entrypoint-initdb.d/
-
 # Modify child mongo to use /data/db-accounts as dbpath (because /data/db wont persist the build because it is already a VOLUME)
 RUN mkdir -p /data/db-users \
     && echo "dbpath = /data/db-users" > /etc/mongodb.conf \
