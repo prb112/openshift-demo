@@ -13,13 +13,16 @@ FROM docker.io/library/mongo:3
 COPY --from=builder /go/src/github.com/microservices-demo/user/docker/user-db/scripts /docker-entrypoint-initdb.d/
 
 ADD files/mongodb.conf /etc
+ADD files/cleanup-users-init.sh /bin
 
 # Modify child mongo to use /data/db-accounts as dbpath (because /data/db wont persist the build because it is already a VOLUME)
 RUN mkdir -p /data/db-users \
     && chown -R mongodb:mongodb /data/db-users \
     && mkdir -p /logs \
     && chown -R mongodb:mongodb /logs \
-    && rm -f /docker-entrypoint-initdb.d/mongo_create_insert.sh
+    && rm -f /docker-entrypoint-initdb.d/mongo_create_insert.sh \
+    && chmod +x /bin/cleanup-users-init.sh \
+    && bash /bin/cleanup-users-init.sh
 
 USER mongodb
 
