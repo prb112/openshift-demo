@@ -37,7 +37,7 @@ spec:
             - name: HATEAOS
               value: user
             - name: USER_DATABASE
-              value: users
+              value: mongodb
           securityContext:
             runAsNonRoot: true
           livenessProbe:

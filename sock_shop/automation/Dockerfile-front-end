@@ -8,7 +8,8 @@ RUN mkdir -p /src/ \
     && cd /src/ \
     && git clone https://github.com/prb112/sock-shop-front-end \
     && ls -al \
-    && mv sock-shop-front-end front-end
+    && mv sock-shop-front-end front-end \
+    && echo $(date)
 
 FROM registry.access.redhat.com/ubi9/nodejs-18:latest
 ENV NODE_ENV "production"
