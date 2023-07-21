@@ -9,7 +9,7 @@ RUN mkdir -p /go/src/github.com/microservices-demo/ \
     && cd /go/src/github.com/microservices-demo/ \
     && git clone https://github.com/microservices-demo/user.git
 
-FROM mongo:3
+FROM docker.io/library/mongo:3
 RUN mkdir -p /scripts/
 COPY --from=builder /go/src/github.com/microservices-demo/user/docker/user-db/scripts /docker-entrypoint-initdb.d/
 
