@@ -5,11 +5,14 @@
 SCRIPT_DIR=$(dirname "$0")
 
 mongod --fork --logpath /data/db-users/mongodb.log --dbpath /data/db-users/
+echo $?
 
-# Ref: https://stackoverflow.com/questions/26558932/what-is-the-correct-way-to-wait-until-mongodb-is-ready-after-restart
 # delay while starting up
-while ! /usr/bin/mongo --eval "db.version()" > /dev/null 2>&1; do sleep 0.1; done
+echo "Delaying startup... 30s"
+sleep 30s
+/usr/bin/mongo --eval "db.version()"
 
+echo "Preparing to run scripts"
 # Create the Accounts
 mongo localhost:27017/users accounts-create.js
 
@@ -17,3 +20,5 @@ mongo localhost:27017/users accounts-create.js
 mongo localhost:27017/users address-insert.js
 mongo localhost:27017/users card-insert.js
 mongo localhost:27017/users customer-insert.js
+
+mongod --dbpath /data/db-users --shutdown
