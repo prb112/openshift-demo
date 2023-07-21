@@ -13,12 +13,14 @@ FROM docker.io/library/mongo:3
 RUN mkdir -p /scripts/
 COPY --from=builder /go/src/github.com/microservices-demo/user/docker/user-db/scripts /docker-entrypoint-initdb.d/
 
+COPY files/user-db-init.sh /docker-entrypoint-initdb.d/
 # Modify child mongo to use /data/db-accounts as dbpath (because /data/db wont persist the build because it is already a VOLUME)
 RUN mkdir -p /data/db-users \
     && echo "dbpath = /data/db-users" > /etc/mongodb.conf \
     && chown -R mongodb:mongodb /data/db-users \
     && mkdir -p /logs \
-    && chown -R mongodb:mongodb /logs
+    && chown -R mongodb:mongodb /logs ]
+    && rm -f /docker-entrypoint-initdb.d/mongo_create_insert.sh
 
 USER mongodb
 #RUN mongod --fork --logpath /logs/mongodb.log --dbpath /data/db-users  \

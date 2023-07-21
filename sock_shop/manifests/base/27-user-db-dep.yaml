@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: user-db
-          image: quay.io/cbade_cs/openshift-demo:sock-shop-user-db
+          image: quay.io/pbastide_rh/openshift-demo:user-db-amd64
           imagePullPolicy: Always
           ports:
             - name: mongo
