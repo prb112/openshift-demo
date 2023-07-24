@@ -7,7 +7,8 @@ ENV USER_DATABASE mongodb
 USER 0
 RUN mkdir -p /go/src/github.com/microservices-demo/ \
     && cd /go/src/github.com/microservices-demo/ \
-    && git clone https://github.com/microservices-demo/user.git
+    && git clone https://github.com/prb112/sock-shop-user.git \
+    && mv sock-shop-user user/
 
 # Decided to split the steps here to avoid rebuilding/cloning needlessly.
 
@@ -38,4 +39,3 @@ RUN     chmod +x /opt/user && \
 USER ${SERVICE_USER}
 
 CMD ["/opt/user", "-port=8080"]
-
