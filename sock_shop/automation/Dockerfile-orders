@@ -3,7 +3,7 @@ FROM registry.access.redhat.com/ubi9/openjdk-11:latest as builder
 USER 0
 RUN mkdir -p /src/ && cd /src/ \
     && microdnf install -y git \
-    && git clone https://github.com/prb112/orders \
+    && git clone https://github.com/prb112/sock-shop-orders \
     && mv sock-shop-orders orders
 
 # Decided to split the steps here to avoid rebuilding/cloning needlessly.
