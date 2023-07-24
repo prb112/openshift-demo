@@ -1,29 +1,18 @@
 FROM registry.access.redhat.com/ubi9/openjdk-11:latest as builder
 
 USER 0
-
-# Original code pulled in a transitive dependency that made it very hard to use sprint-boot.
-
-#RUN microdnf install -y git \
-#    && mkdir -p /src/ \
-#    && cd /src/ \
-#    && git clone https://github.com/microservices-demo/orders
+RUN mkdir -p /src/ && cd /src/ \
+    && microdnf install -y git \
+    && git clone https://github.com/prb112/orders \
+    && mv sock-shop-orders orders
 
 # Decided to split the steps here to avoid rebuilding/cloning needlessly.
-#RUN cd /src/carts && mvn clean package -DskipTests
 
-# Workaround: To update the code and pull out the jar we're using crane to grab the existing jar
-
-RUN microdnf install -y tar gzip \
-    && curl -L -o o.tgz "https://github.com/google/go-containerregistry/releases/download/v0.15.2/go-containerregistry_Linux_$(arch | sed 's|aarch64|arm64|g').tar.gz" \
-    && tar xvf o.tgz \
-    && ./crane export weaveworksdemos/orders:0.4.7 x.tar \
-    && tar xvf x.tar usr/src/app/app.jar \
-    && mv usr/src/app/app.jar app.jar
+RUN cd /src/orders && mvn clean package -DskipTests && find . -iname '*.jar'
 
 USER 1001
 
-FROM registry.access.redhat.com/ubi9/openjdk-11-runtime:latest
+FROM registry.access.redhat.com/ubi9/openjdk-11:latest
 
 ENV	SERVICE_USER=myuser \
 	SERVICE_UID=10001 \
@@ -39,9 +28,8 @@ RUN microdnf update -y \
 WORKDIR /
 EXPOSE 8080
 
-RUN mkdir -p /opt
-COPY --from=builder /home/default/app.jar /app.jar
-RUN	chown -R ${SERVICE_USER}:${SERVICE_GROUP} /app.jar
+COPY --from=builder /src/orders/target/*.jar ./app.jar
+RUN	chown -R ${SERVICE_USER}:${SERVICE_GROUP} ./app.jar
 
 # Override a jaxb error as it's not included in JDK 11
 RUN mkdir -p /opt/lib \
@@ -51,4 +39,4 @@ RUN mkdir -p /opt/lib \
 
 USER ${SERVICE_USER}
 
-ENTRYPOINT ["java","-Djava.security.egd=file:/dev/urandom", "-jar","/opt/app.jar", "--port=8080"]
+ENTRYPOINT ["/usr/bin/java","-jar","/app.jar", "--port=8080"]
