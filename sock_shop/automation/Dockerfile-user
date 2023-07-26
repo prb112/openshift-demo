@@ -13,7 +13,7 @@ RUN mkdir -p /go/src/github.com/microservices-demo/ \
 # Decided to split the steps here to avoid rebuilding/cloning needlessly.
 
 RUN cd /go/src/github.com/microservices-demo/user && go mod init github.com/microservices-demo/user \
-    && go mod tidy && GOOS=linux go build . && find / -name user -type f
+    && rm -f go.mod && go mod tidy && GOOS=linux go build . && find / -name user -type f
 USER 1001
 
 FROM registry.access.redhat.com/ubi9/ubi-minimal:latest
