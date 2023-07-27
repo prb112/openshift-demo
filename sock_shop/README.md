@@ -114,6 +114,15 @@ The architecture is:
 
 ![image.png](https://raw.githubusercontent.com/microservices-demo/microservices-demo.github.io/master/assets/Architecture.png)
 
+
+The application looks like: 
+
+![socks-orders.png](socks-orders.png)
+
+### Using
+
+Please login in via the https route to sock-shop and register a new user.
+
 ### Testing the Multiarchitecture Compute
 1. [e2e-test](https://github.com/microservices-demo/e2e-tests)
 2. [load-test](https://github.com/microservices-demo/load-test)
