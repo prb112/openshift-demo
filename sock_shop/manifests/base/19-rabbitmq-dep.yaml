@@ -37,3 +37,4 @@ spec:
               name: exporter
       nodeSelector:
         node.openshift.io/os_id: rhcos
+        kubernetes.io/arch: amd64
